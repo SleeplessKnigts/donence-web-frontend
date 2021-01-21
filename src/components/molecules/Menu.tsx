@@ -8,7 +8,7 @@ import { AuthContext } from "../../context/AuthContext";
 
 export const Menu: React.FC<MenuToggleProps> = (props) => {
     const { isOpen, toggle } = props;
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, logout } = useContext(AuthContext);
 
     const authenticatedMenuElements = (
         <>
@@ -16,8 +16,6 @@ export const Menu: React.FC<MenuToggleProps> = (props) => {
             <MenuItem to={"/very-authenticated-1"}>very-authenticated-2</MenuItem>
         </>
     );
-
-
 
     return (
         <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="brand.900" color="white">
@@ -37,11 +35,19 @@ export const Menu: React.FC<MenuToggleProps> = (props) => {
             </Box>
 
             <Box display={{ sm: isOpen ? "block" : "none", md: "block" }} mt={{ base: 4, md: 0 }}>
-                <Link to="/giris-yap">
-                    <Button bg="transparent" _hover={{ bg: "brand.700", border: "none" }} border="1px">
-                        Giriş Yap
-                    </Button>
-                </Link>
+                {isAuthenticated ? (
+                    <Link to="/">
+                        <Button bg="transparent" _hover={{ bg: "brand.700", border: "none" }} onClick={logout} border="1px">
+                            Çıkış Yap
+                        </Button>
+                    </Link>
+                ) : (
+                    <Link to="/giris-yap">
+                        <Button bg="transparent" _hover={{ bg: "brand.700", border: "none" }} border="1px">
+                            Giriş Yap
+                        </Button>
+                    </Link>
+                )}
             </Box>
         </Flex>
     );
