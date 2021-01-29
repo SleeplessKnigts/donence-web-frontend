@@ -6,6 +6,9 @@ import { Menu } from "./components/molecules/Menu";
 import AuthProvider, { AuthContext } from "./context/AuthContext";
 import { Login } from "./pages/Login/Login";
 import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
+import AddRecyclePoint from "./pages/AdminPanel/AddRecyclePoint";
+import RecyclePoint from "./pages/AdminPanel/RecyclePoint";
+import AdminPanel from "./pages/AdminPanel/AdminPanel";
 
 function App() {
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +24,9 @@ function App() {
                 <Switch>
                     <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
                     <Route exact path="/giris-yap" component={Login} />
+                    <Route exact path="/admin" component={AdminPanel} />
+                    <Route exact path="/admin/recycle-point" component={RecyclePoint} />
+                    <Route exact path="/admin/recycle-point/new" component={AddRecyclePoint} />
                 </Switch>
             </AuthProvider>
         </BrowserRouter>
