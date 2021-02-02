@@ -4,8 +4,7 @@ import {GoogleMap, LoadScript, Marker, InfoWindow} from '@react-google-maps/api'
 
 
 type MapProps = {
-    location?: string
-    zoomLevel?: number
+    setCurrentLoc: Function;
 }
 const containerStyle = {
     width: '800px',
@@ -13,21 +12,18 @@ const containerStyle = {
 };
 
 const defaultLocation = {
-    lat: 36.879621,
-    lng: 35.768054
+    lat: 39.904239006864785,
+    lng: 32.87195490942385
 };
-const AnyReactComponent = ({text}: any) => <div>{text}</div>;
 
-export const Map: React.FC<MapProps> = () => {
-    const [center, setCenter] = useState({lat: 51.0168, lng: 76.9558});
+export const Map: React.FC<MapProps> = ({setCurrentLoc}) => {
     const [show, setShow] = useState(false);
-
-    const [currentLoc, setCurrentLoc] = useState({})
+    setCurrentLoc(defaultLocation);
+    let lat = 0,lng = 0;
     const onMarkerDragEnd = (values: any) => {
-        const lat = values?.lat();
-        const lng = values?.lng();
+        lat = values?.lat();
+        lng = values?.lng();
         setCurrentLoc({ lat, lng});
-        console.log(currentLoc);
     };
 
     return (
@@ -39,8 +35,8 @@ export const Map: React.FC<MapProps> = () => {
                 >
                     <GoogleMap
                         mapContainerStyle={containerStyle}
-                        center={center}
-                        zoom={10}
+                        center={defaultLocation}
+                        zoom={15}
                     >
                         <Marker key="Example"
                                 onClick={() => setShow(true)}
@@ -50,7 +46,7 @@ export const Map: React.FC<MapProps> = () => {
                         />
                         {show && (
                             <InfoWindow
-                                position={currentLoc}
+                                position={{ lat, lng}}
                                 onCloseClick={() => setShow(false)}
                             >
                                 <p>Deneme</p>

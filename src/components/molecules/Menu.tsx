@@ -12,7 +12,7 @@ export const Menu: React.FC<MenuToggleProps> = (props) => {
 
     const authenticatedMenuElements = (
         <>
-            <MenuItem to={"/very-authenticated-1"}>very-authenticated-1</MenuItem>
+            <MenuItem to={"/admin"}>Admin Panel</MenuItem>
             <MenuItem to={"/very-authenticated-1"}>very-authenticated-2</MenuItem>
         </>
     );
