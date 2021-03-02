@@ -1,16 +1,21 @@
-import {Button, Center, FormControl, Input} from "@chakra-ui/react";
-import React, {useState} from "react";
-import Map from "../../components/organisms/Map/Map";
-import {useForm} from "react-hook-form";
+import {Button, Center, FormControl, Input} from '@chakra-ui/react';
+import React, {useState} from 'react';
+import Map from '../../components/organisms/Map/Map';
+import {useForm} from 'react-hook-form';
+import {api} from '../../shared/api/api';
 
 export const AddRecyclePoint = () => {
-    const [currentLoc, setCurrentLoc] = useState({});
+    const [currentLoc, setCurrentLoc] = useState({
+        lat: 0,
+        lng: 0
+    });
     const {handleSubmit, register, formState} = useForm();
 
-    function onSubmit(values: { name: string; location: {}; }) {
-        //TODO send query
-        values.location = currentLoc;
-        console.log(values);
+    function onSubmit(values: { recyclePointDetail: string; lat: number; lng: number }) {
+        //TODO react-query
+        values.lat = currentLoc.lat;
+        values.lng = currentLoc.lng;
+        api.admin.newRecyclePoint(values);
     }
 
     return (
@@ -21,7 +26,7 @@ export const AddRecyclePoint = () => {
             <FormControl>
                 <Input
                     m={2}
-                    name="name"
+                    name="recyclePointDetail"
                     placeholder="Description"
                     focusBorderColor="lime"
                     borderColor="green.700"
@@ -41,6 +46,6 @@ export const AddRecyclePoint = () => {
             </Center>
         </form>
     );
-}
+};
 
 export default AddRecyclePoint;
