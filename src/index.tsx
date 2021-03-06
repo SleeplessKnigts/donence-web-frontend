@@ -5,9 +5,17 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ChakraProvider, extendTheme } from "@chakra-ui/react";
 import { colors } from "./constants/theme";
-import { BrowserRouter } from "react-router-dom";
 
-const theme = extendTheme({ colors });
+const theme = extendTheme({ colors: colors, 
+    config: {initialColorMode : "light"}, 
+    styles: {
+        global: {
+            body: {
+                bg: "gray.200"
+            }
+        }
+    }
+});
 
 ReactDOM.render(
     <React.StrictMode>
