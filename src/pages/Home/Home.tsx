@@ -3,7 +3,7 @@ import { Image } from "@chakra-ui/image";
 import { Box, Center, Container, Heading, Text } from "@chakra-ui/layout";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import React from "react";
+import React, { useContext } from "react";
 import { FcAndroidOs } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import LandingPageImage from "../../assets/ac29042cc76a0c2abb33ba12dc30f37f.png";
@@ -14,9 +14,12 @@ import Feature3 from "../../assets/features3.png";
 import Feature4 from "../../assets/features4.png";
 import { Feature } from "../../components/molecules/Feature";
 import { Features } from "../../containers/Features/Features";
+import { AuthContext } from "../../context/AuthContext";
 
 export const Home: React.FC = () => {
-    return (
+    const { isAuthenticated, logout } = useContext(AuthContext);
+
+    let layout = (
         <>
             <Box position="relative" color="brand.800">
                 <Image
@@ -43,7 +46,7 @@ export const Home: React.FC = () => {
                 <Heading marginY="8">Neden?</Heading>
                 <Feature
                     title="Her gün daha da büyüyen dünyada atıkların yönetimi gayrı resmi ve dağıtık firmalar
-                            tarafından yönetilmektedir."
+                        tarafından yönetilmektedir."
                     description="Hal böyle olunca belediyeler ve daha büyük çaplı organizatörler geri dönüşümü efektif bir şekilde yönetmeyi başaramıyorlar. Dönence ise tek bir sistemden bütün verilere ve kaynaklara erişime izin vererek bu problemi çözmeyi amaçlıyor."
                     imageSource={RecycleElements}
                     direction="row"
@@ -86,4 +89,10 @@ export const Home: React.FC = () => {
             </Container>
         </>
     );
+
+    if (isAuthenticated) {
+        layout = <h1>User authenticated homepage!</h1>;
+    }
+
+    return <>{layout}</>;
 };
