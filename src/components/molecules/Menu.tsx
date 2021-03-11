@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { Logo } from "../atoms/Logo";
 import { MenuToggle, MenuToggleProps } from "../atoms/MenuToggle";
@@ -8,14 +8,37 @@ import { AuthContext } from "../../context/AuthContext";
 
 export const Menu: React.FC<MenuToggleProps> = (props) => {
     const { isOpen, toggle } = props;
-    const { isAuthenticated, logout } = useContext(AuthContext);
+    const { isAuthenticated, logout, userType } = useContext(AuthContext);
 
-    const authenticatedMenuElements = (
-        <>
-            <MenuItem to={"/admin"}>Admin Panel</MenuItem>
-            <MenuItem to={"/very-authenticated-1"}>very-authenticated-2</MenuItem>
-        </>
-    );
+    let authenticatedMenuElements;
+
+    switch (userType) {
+        case "395cc606-30da-4789-9bd3-acc1add79ef9":
+            authenticatedMenuElements = (
+                <>
+                    <MenuItem to={"/admin"}>Admin Panel</MenuItem>
+                    <MenuItem to={"/very-authenticated-1"}>Only admin can see this</MenuItem>
+                </>
+            );
+            break;
+        case "8a6ee639-a7e6-456f-af12-2b714df5fecd":
+            authenticatedMenuElements = (
+                <>
+                    <MenuItem to={"/haberler"}>Haberler</MenuItem>
+                    <MenuItem to={"/panel"}>Only user can see this</MenuItem>
+                </>
+            );
+            break;
+        case "2612bedd-ae65-4ed6-a8e1-8c7f868294d6":
+            authenticatedMenuElements = (
+                <>
+                    <MenuItem to={"/panel"}>Only driver can see this</MenuItem>
+                </>
+            );
+            break;
+        default:
+            break;
+    }
 
     return (
         <Flex as="nav" align="center" justify="space-between" wrap="wrap" padding="1rem" bg="brand.900" color="white">
@@ -29,15 +52,18 @@ export const Menu: React.FC<MenuToggleProps> = (props) => {
                 alignItems="center"
                 flexGrow={1}
             >
-                <MenuItem to={"/haberler"}>Haberler</MenuItem>
-                <MenuItem to={"/loL"}>lol</MenuItem>
                 {isAuthenticated && authenticatedMenuElements}
             </Box>
 
             <Box display={{ sm: isOpen ? "block" : "none", md: "block" }} mt={{ base: 4, md: 0 }}>
                 {isAuthenticated ? (
                     <Link to="/">
-                        <Button bg="transparent" _hover={{ bg: "brand.700", border: "none" }} onClick={logout} border="1px">
+                        <Button
+                            bg="transparent"
+                            _hover={{ bg: "brand.700", border: "none" }}
+                            onClick={logout}
+                            border="1px"
+                        >
                             Çıkış Yap
                         </Button>
                     </Link>
