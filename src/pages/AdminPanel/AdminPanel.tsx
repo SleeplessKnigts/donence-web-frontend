@@ -1,6 +1,6 @@
 import {Button, Container, Grid, GridItem, Center} from "@chakra-ui/react";
 import React, {useState} from "react";
-import RecyclePoint from "./RecyclePoint";
+import RecyclePoint from "./AddRecyclePoint";
 import AddRecyclePoint from "./AddRecyclePoint";
 
 

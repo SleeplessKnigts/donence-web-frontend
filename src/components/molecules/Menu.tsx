@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext} from "react";
 import { Box, Button, Flex } from "@chakra-ui/react";
 import { Logo } from "../atoms/Logo";
 import { MenuToggle, MenuToggleProps } from "../atoms/MenuToggle";

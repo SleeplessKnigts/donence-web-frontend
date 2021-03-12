@@ -1,4 +1,4 @@
-import { Container, Flex, Heading, SimpleGrid } from "@chakra-ui/layout";
+import { Heading, SimpleGrid } from "@chakra-ui/layout";
 import React from "react";
 import { ReactNode } from "react-dom/node_modules/@types/react";
 
