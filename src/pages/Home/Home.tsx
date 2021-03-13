@@ -15,9 +15,10 @@ import Feature4 from "../../assets/features4.png";
 import { Feature } from "../../components/molecules/Feature";
 import { Features } from "../../containers/Features/Features";
 import { AuthContext } from "../../context/AuthContext";
+import { UserHomePage } from "./UserHomePage";
 
 export const Home: React.FC = () => {
-    const { isAuthenticated, logout } = useContext(AuthContext);
+    const { isAuthenticated, userType } = useContext(AuthContext);
 
     let layout = (
         <>
@@ -90,8 +91,11 @@ export const Home: React.FC = () => {
         </>
     );
 
-    if (isAuthenticated) {
-        layout = <h1>User authenticated homepage!</h1>;
+    if (isAuthenticated && userType === "8a6ee639-a7e6-456f-af12-2b714df5fecd") {
+        layout = <UserHomePage />;
+    }
+    else if(isAuthenticated && userType === "395cc606-30da-4789-9bd3-acc1add79ef9"){
+        layout = <h1>Admin home page buraya Arifto</h1>
     }
 
     return <>{layout}</>;
