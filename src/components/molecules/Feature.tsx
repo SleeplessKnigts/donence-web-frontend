@@ -13,7 +13,7 @@ export const Feature: React.FC<FeatureProps> = ({ title, description, imageSourc
 
     return (
         <Flex direction={{base:"column" ,md: direction}} align="center" >
-            <Image src={imageSource} borderRadius="full" alt="Geri donusturelebilir atiklar" marginX="4" marginBottom="4"/>
+            <Image src={imageSource} borderRadius="full" alt="Geri donusturelebilir atiklar" marginX="4" marginBottom="4" minHeight="200px"/>
             <Box>
                 <Text fontSize="1.15em" fontWeight="bold" textAlign={direction === "row" ? "left" : "center"}>
                     {title}
