@@ -1,14 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { Menu } from "./components/molecules/Menu";
-import AuthProvider, { AuthContext } from "./context/AuthContext";
-import { Login } from "./pages/Login/Login";
-import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
-import AddRecyclePoint from "./pages/AdminPanel/AddRecyclePoint";
-import RecyclePoint from "./pages/AdminPanel/AddRecyclePoint";
-import AdminPanel from "./pages/AdminPanel/AdminPanel";
-import { Home } from "./pages/Home/Home";
-import { Routes } from "./Routes";
+import { useState } from 'react';
+import { BrowserRouter } from 'react-router-dom';
+import { Menu } from './components/molecules/Menu';
+import AuthProvider from './context/AuthContext';
+import { Routes } from './Routes';
 
 function App() {
     const [isOpen, setIsOpen] = useState(false);
