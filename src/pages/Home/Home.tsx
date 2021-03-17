@@ -15,6 +15,7 @@ import Feature4 from "../../assets/features4.png";
 import { Feature } from "../../components/molecules/Feature";
 import { Features } from "../../containers/Features/Features";
 import { AuthContext } from "../../context/AuthContext";
+import { AdminHomePage } from "./AdminHomePage";
 import { UserHomePage } from "./UserHomePage";
 
 export const Home: React.FC = () => {
@@ -76,12 +77,19 @@ export const Home: React.FC = () => {
                     />
                 </Features>
                 <Center marginY="12">
-                    <ButtonGroup spacing="12" variant="outline" colorScheme="brand">
+                    <ButtonGroup
+                        spacing="12"
+                        variant="outline"
+                        colorScheme="brand"
+                    >
                         <Button rightIcon={<FcAndroidOs />} borderRadius="full">
                             İndirin
                         </Button>
                         <Link to="/giris-yap">
-                            <Button rightIcon={<FontAwesomeIcon icon={faUser} />} borderRadius="full">
+                            <Button
+                                rightIcon={<FontAwesomeIcon icon={faUser} />}
+                                borderRadius="full"
+                            >
                                 Üye olun
                             </Button>
                         </Link>
@@ -91,11 +99,16 @@ export const Home: React.FC = () => {
         </>
     );
 
-    if (isAuthenticated && userType === "8a6ee639-a7e6-456f-af12-2b714df5fecd") {
+    if (
+        isAuthenticated &&
+        userType === "8a6ee639-a7e6-456f-af12-2b714df5fecd"
+    ) {
         layout = <UserHomePage />;
-    }
-    else if(isAuthenticated && userType === "395cc606-30da-4789-9bd3-acc1add79ef9"){
-        layout = <h1>Admin home page buraya Arifto</h1>
+    } else if (
+        isAuthenticated &&
+        userType === "395cc606-30da-4789-9bd3-acc1add79ef9"
+    ) {
+        layout = <AdminHomePage />;
     }
 
     return <>{layout}</>;
