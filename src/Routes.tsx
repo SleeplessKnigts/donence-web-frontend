@@ -6,6 +6,7 @@ import AdminPanel from "./pages/AdminPanel/AdminPanel";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
+import { RecyclingPoints } from "./pages/User/RecyclingPoints";
 
 export const Routes: React.FC = () => {
     const { userType } = useContext(AuthContext);
@@ -26,7 +27,7 @@ export const Routes: React.FC = () => {
                     path="/user/panel"
                     component={() => <h1>User panel, admin should not see the layout</h1>}
                 />,
-                <Route exact path="/donusum-noktalari" component={() => <h1>Donusum noktalari</h1>} />,
+                <Route exact path="/donusum-noktalari" component={RecyclingPoints} />,
                 <Route exact path="/toplama-noktalari" component={() => <h1>Toplama Noktalari</h1>} />,
                 <Route exact path="/user/katkilarim" component={() => <h1>Katkilarim</h1>} />,
                 <Route exact path="/user/me" component={() => <h1>Kullanici bilgileri</h1>} />,

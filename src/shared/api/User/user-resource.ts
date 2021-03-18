@@ -1,11 +1,11 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { RecyclePoint } from "../../types";
+import { UserInfo } from "../../types";
 
 
 export class UserResource {
     constructor(private axios: AxiosInstance = axiosStatic, private axiosRequestConfig: AxiosRequestConfig = {}) {}
 
-    getProfileInfo = (): Promise<any> => {
+    getProfileInfo = (): Promise<UserInfo> => {
         return this.axios
             .get("user/me", this.axiosRequestConfig)
             .then((response) => {
