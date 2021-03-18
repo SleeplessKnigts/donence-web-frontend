@@ -1,24 +1,18 @@
 import { Box, Container, Heading } from "@chakra-ui/layout";
 import React, { useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { Feature } from "../../components/molecules/Feature";
 import { Features } from "../../containers/Features/Features";
 import { api } from "../../shared/api/api";
 
 export const UserHomePage = () => {
-    const [name, setName] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
 
-    useEffect(() => {
-        api.user.getProfileInfo().then((r) => {
-            setName(r.fname);
-            setImageUrl(r.imageUrl);
-        });
-    });
+    const { data } = useQuery("getProfileInfo", api.user.getProfileInfo);
 
     return (
         <Container maxW="container.lg" paddingY="16" height="100vh">
-            <Heading>Merhaba, {name}</Heading>
+            <Heading>Merhaba, {data.fname}</Heading>
             <Box marginY="24">
                 <Features title="">
                     <Link to="/donusum-noktalari">
@@ -49,7 +43,7 @@ export const UserHomePage = () => {
                         />
                     </Link>
                     <Link to="/user/me">
-                        <Feature title="Kullanıcı Bilgileri" description="" imageSource={imageUrl} />
+                        <Feature title="Kullanıcı Bilgileri" description="" imageSource={data.imageUrl} />
                     </Link>
                 </Features>
             </Box>
