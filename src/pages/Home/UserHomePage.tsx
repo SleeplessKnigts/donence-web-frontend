@@ -10,9 +10,11 @@ export const UserHomePage = () => {
 
     const { data } = useQuery("getProfileInfo", api.user.getProfileInfo);
 
+    console.log(data)
+
     return (
         <Container maxW="container.lg" paddingY="16" height="100vh">
-            <Heading>Merhaba, {data.fname}</Heading>
+            <Heading>Merhaba, {data?.fname}</Heading>
             <Box marginY="24">
                 <Features title="">
                     <Link to="/donusum-noktalari">
@@ -43,7 +45,7 @@ export const UserHomePage = () => {
                         />
                     </Link>
                     <Link to="/user/me">
-                        <Feature title="Kullanıcı Bilgileri" description="" imageSource={data.imageUrl} />
+                        <Feature title="Kullanıcı Bilgileri" description="" imageSource={data?.imageUrl} />
                     </Link>
                 </Features>
             </Box>

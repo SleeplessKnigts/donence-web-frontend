@@ -26,6 +26,10 @@ export const Routes: React.FC = () => {
                     path="/user/panel"
                     component={() => <h1>User panel, admin should not see the layout</h1>}
                 />,
+                <Route exact path="/donusum-noktalari" component={() => <h1>Donusum noktalari</h1>} />,
+                <Route exact path="/toplama-noktalari" component={() => <h1>Toplama Noktalari</h1>} />,
+                <Route exact path="/user/katkilarim" component={() => <h1>Katkilarim</h1>} />,
+                <Route exact path="/user/me" component={() => <h1>Kullanici bilgileri</h1>} />,
             ];
             break;
         case "2612bedd-ae65-4ed6-a8e1-8c7f868294d6":
@@ -43,7 +47,9 @@ export const Routes: React.FC = () => {
 
     return (
         <Switch>
-            {authorizedRouteSet?.map((el) => el)}
+            {authorizedRouteSet?.map((el, index) => {
+                return el
+            })}
             <Route exact path="/haberler" component={() => <h1>Haberler page</h1>} />
             <Route exact path="/giris-yap" component={Login} />
             <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
