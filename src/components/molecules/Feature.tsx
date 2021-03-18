@@ -5,7 +5,7 @@ import React from "react";
 export interface FeatureProps {
     title: string;
     description: string;
-    imageSource: string;
+    imageSource: string | undefined;
     direction?: "column" | "row";
 }
 
