@@ -7,7 +7,7 @@ export interface RecyclePoint {
 export interface UserInfo{
     email: string,
     imageUrl: string,
-    latitude: number,
-    longitude: number,
+    lat: number,
+    lng: number,
     fname: string,
 }

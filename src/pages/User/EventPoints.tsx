@@ -14,9 +14,9 @@ export const EventPoints: React.FC = () => {
     if (isFetched) {
         component = (
             <Container maxW="container.lg">
-                <Heading>This is good old event noktalari</Heading>
+                <Heading marginY="8">Etkinlik Noktaları</Heading>
                 <MapPoints
-                    center={{ lat: userInfo?.latitude, lng: userInfo?.longitude }}
+                    center={{ lat: userInfo?.lat, lng: userInfo?.lng }}
                     points={[]}
                 />
             </Container>

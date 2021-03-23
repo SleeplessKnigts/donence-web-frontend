@@ -14,9 +14,9 @@ export const RecyclingPoints: React.FC = () => {
     if (isFetched) {
         component = (
             <Container maxW="container.lg">
-                <Heading>This is good old geri donusum noktalari</Heading>
+                <Heading marginY="8">Geri Dönüşüm Noktaları</Heading>
                 <MapPoints
-                    center={{ lat: userInfo?.latitude, lng: userInfo?.longitude }}
+                    center={{ lat: userInfo?.lat, lng: userInfo?.lng }}
                     points={recylingPoints}
                 />
             </Container>
