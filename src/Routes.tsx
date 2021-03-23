@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router";
 import { AuthContext } from "./context/AuthContext";
 import AddRecyclePoint from "./pages/AdminPanel/AddRecyclePoint";
 import AdminPanel from "./pages/AdminPanel/AdminPanel";
+import { UserPermissions } from "./pages/AdminPanel/UserPermissions";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
@@ -19,6 +20,7 @@ export const Routes: React.FC = () => {
                 <Route exact path="/admin" component={AdminPanel} />,
                 <Route exact path="/admin/recycle-point" component={AddRecyclePoint} />,
                 <Route exact path="/admin/recycle-point/new" component={AddRecyclePoint} />,
+                <Route exact path="/admin/kullanici-yetkileri" component={UserPermissions} />,
             ];
             break;
         case "8a6ee639-a7e6-456f-af12-2b714df5fecd":
@@ -50,7 +52,7 @@ export const Routes: React.FC = () => {
     return (
         <Switch>
             {authorizedRouteSet?.map((el, index) => {
-                return el
+                return el;
             })}
             <Route exact path="/haberler" component={() => <h1>Haberler page</h1>} />
             <Route exact path="/giris-yap" component={Login} />

@@ -3,6 +3,10 @@ export interface RecyclePoint {
     lat: number;
     lng: number;
 }
+export interface AssignRole {
+    email: string;
+    role: "ROLE_ADMIN" | "ROLE_USER" | "ROLE_DRIVER" 
+}
 
 export interface UserInfo{
     email: string,
