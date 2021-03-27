@@ -1,56 +1,105 @@
-import React, {useState} from 'react'
-import './map.css'
-import {GoogleMap, LoadScript, Marker, InfoWindow} from '@react-google-maps/api';
-
+import React, { useEffect, useState } from "react";
+import "./map.css";
+import {
+    GoogleMap,
+    LoadScript,
+    Marker,
+    InfoWindow,
+} from "@react-google-maps/api";
+import { RecyclePoint } from "../../../shared/types";
 
 type MapProps = {
     setCurrentLoc: Function;
-}
+    addPoint: boolean;
+    currentLoc?: RecyclePoint;
+    pointList?: RecyclePoint[];
+};
 const containerStyle = {
-    width: '800px',
-    height: '400px'
+    height: "100%",
+    width: "100w",
 };
 
-const defaultLocation = {
-    lat: 39.904239006864785,
-    lng: 32.87195490942385
-};
-
-export const Map: React.FC<MapProps> = ({setCurrentLoc}) => {
+export const Map: React.FC<MapProps> = ({
+    setCurrentLoc,
+    currentLoc,
+    addPoint,
+    pointList,
+}) => {
     const [show, setShow] = useState(false);
-    setCurrentLoc(defaultLocation);
-    let lat = 0,lng = 0;
+    const [selectedPoint, setSelectedPoint] = useState<RecyclePoint | null>();
+    const [loc, setLoc] = useState({
+        lat: currentLoc?.lat,
+        lng: currentLoc?.lng,
+    });
+    const [points, setPoints] = useState<RecyclePoint[]>([]);
+
+    if (pointList) {
+        setPoints(pointList);
+        console.log(pointList);
+    }
+
     const onMarkerDragEnd = (values: any) => {
-        lat = values?.lat();
-        lng = values?.lng();
-        setCurrentLoc({ lat, lng});
+        loc.lat = values?.lat();
+        loc.lng = values?.lng();
+        setCurrentLoc(loc);
     };
 
     return (
         <div className="map">
             <h2 className="map-h2">ADD RECYCLE POINT FROM THE MAP BELOW</h2>
             <div className="google-map">
-                <LoadScript
-                    googleMapsApiKey="AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y"
-                >
+                <LoadScript googleMapsApiKey="AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y">
                     <GoogleMap
                         mapContainerStyle={containerStyle}
-                        center={defaultLocation}
-                        zoom={15}
+                        center={loc}
+                        zoom={10}
                     >
-                        <Marker key="Example"
-                                onClick={() => setShow(true)}
-                                position={defaultLocation}
-                                draggable={true}
-                                onDragEnd={(e) => onMarkerDragEnd(e.latLng)}
-                        />
-                        {show && (
-                            <InfoWindow
-                                position={{ lat, lng}}
-                                onCloseClick={() => setShow(false)}
-                            >
-                                <p>Deneme</p>
-                            </InfoWindow>
+                        {addPoint ? (
+                            <>
+                                <Marker
+                                    key="point"
+                                    onClick={() => setShow(true)}
+                                    position={loc}
+                                    draggable={true}
+                                    onDragEnd={(e) => onMarkerDragEnd(e.latLng)}
+                                />
+
+                                {show && (
+                                    <InfoWindow
+                                        position={loc}
+                                        onCloseClick={() => setShow(false)}
+                                    >
+                                        <p>{currentLoc?.recyclePointDetail}</p>
+                                    </InfoWindow>
+                                )}
+                            </>
+                        ) : (
+                            points.map((point) => (
+                                <>
+                                    <Marker
+                                        key={point.recyclePointDetail}
+                                        onClick={() => setSelectedPoint(point)}
+                                        position={{
+                                            lat: point.lat,
+                                            lng: point.lng,
+                                        }}
+                                    />
+                                    {selectedPoint ? (
+                                        <InfoWindow
+                                            position={loc}
+                                            onCloseClick={() => {
+                                                setSelectedPoint(null);
+                                            }}
+                                        >
+                                            <p>
+                                                {
+                                                    selectedPoint.recyclePointDetail
+                                                }
+                                            </p>
+                                        </InfoWindow>
+                                    ) : null}
+                                </>
+                            ))
                         )}
                     </GoogleMap>
                 </LoadScript>

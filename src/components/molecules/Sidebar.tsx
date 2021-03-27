@@ -14,12 +14,16 @@ type SidebarProps = {
     isOpen: boolean;
     onClose: Function;
     variant?: string;
+    setComponent?: Function;
+    buttonTitles?: string[];
 };
 
 export const Sidebar: React.FC<SidebarProps> = ({
     isOpen,
     onClose,
     variant,
+    setComponent,
+    buttonTitles,
 }) => {
     return variant === 'sidebar' ? (
         <Box
@@ -35,16 +39,22 @@ export const Sidebar: React.FC<SidebarProps> = ({
             <Flex align='center' mb={5}>
                 <Logo />
             </Flex>
-            <SidebarContent />
+            <SidebarContent
+                buttonTitles={buttonTitles}
+                setComponent={setComponent}
+            />
         </Box>
     ) : (
         <Drawer isOpen={isOpen} placement='left' onClose={() => onClose}>
             <DrawerOverlay>
                 <DrawerContent>
                     <DrawerCloseButton />
-                    <DrawerHeader>Chakra-UI</DrawerHeader>
+                    <DrawerHeader>Admin Paneli</DrawerHeader>
                     <DrawerBody>
-                        <SidebarContent />
+                        <SidebarContent
+                            buttonTitles={buttonTitles}
+                            setComponent={setComponent}
+                        />
                     </DrawerBody>
                 </DrawerContent>
             </DrawerOverlay>

@@ -1,17 +1,33 @@
-import {Button, Center, FormControl, Input} from '@chakra-ui/react';
-import React, {useState} from 'react';
-import Map from '../../components/organisms/Map/Map';
-import {useForm} from 'react-hook-form';
-import {api} from '../../shared/api/api';
+import { Button, Center, FormControl, Input } from "@chakra-ui/react";
+import React, { useState } from "react";
+import Map from "../../components/organisms/Map/Map";
+import { useForm } from "react-hook-form";
+import { api } from "../../shared/api/api";
+import { RecyclePoint } from "../../shared/types";
 
-export const AddRecyclePoint = () => {
-    const [currentLoc, setCurrentLoc] = useState({
-        lat: 0,
-        lng: 0
+type AddRecyclePointProps = {
+    currentPoint?: RecyclePoint;
+};
+
+export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
+    currentPoint,
+}) => {
+    const [currentLoc, setCurrentLoc] = useState<RecyclePoint>({
+        recyclePointDetail: "Geri donusum noktasi",
+        lat: 39.904239006864785,
+        lng: 32.87195490942385,
     });
-    const {handleSubmit, register, formState} = useForm();
 
-    function onSubmit(values: { recyclePointDetail: string; lat: number; lng: number }) {
+    if (currentPoint) {
+        setCurrentLoc(currentPoint);
+    }
+    const { handleSubmit, register, formState } = useForm();
+
+    function onSubmit(values: {
+        recyclePointDetail: string;
+        lat: number;
+        lng: number;
+    }) {
         //TODO react-query
         values.lat = currentLoc.lat;
         values.lng = currentLoc.lng;
@@ -21,7 +37,11 @@ export const AddRecyclePoint = () => {
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
             <FormControl>
-                <Map setCurrentLoc={setCurrentLoc}/>
+                <Map
+                    setCurrentLoc={setCurrentLoc}
+                    addPoint={true}
+                    currentLoc={currentLoc}
+                />
             </FormControl>
             <FormControl>
                 <Input
@@ -31,7 +51,7 @@ export const AddRecyclePoint = () => {
                     focusBorderColor="lime"
                     borderColor="green.700"
                     isRequired={true}
-                    ref={register({required: true})}
+                    ref={register({ required: true })}
                 />
             </FormControl>
             <Center>
