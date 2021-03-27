@@ -15,3 +15,16 @@ export interface UserInfo{
     lng: number,
     fname: string,
 }
+
+export interface UserRequest{
+    requestType: string, 
+    creationDate: Date,
+    isActive:boolean,
+}
+
+export interface CollectionEvent{
+    eventDetail:string,
+    materialType:string,
+    lat:number,
+    lng:number,
+}
