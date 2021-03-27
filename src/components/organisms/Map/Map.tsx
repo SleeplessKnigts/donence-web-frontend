@@ -46,9 +46,7 @@ export const Map: React.FC<MapProps> = ({
 
     return (
         <div className='map'>
-            <h2 className='map-h2'>
-                İŞARETLEYİCİ İLE GERİ DÖNÜŞÜM NOKTASINI BELİRLEYİN
-            </h2>
+            <h2 className='map-h2'>İŞARETLEYİCİ İLE ADRESİ BELİRLEYİN</h2>
             <div className='google-map'>
                 <LoadScript googleMapsApiKey='AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y'>
                     <GoogleMap

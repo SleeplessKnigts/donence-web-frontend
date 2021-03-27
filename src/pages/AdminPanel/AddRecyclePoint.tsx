@@ -51,7 +51,7 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
                 <Input
                     m={2}
                     name='recyclePointDetail'
-                    placeholder='Description'
+                    placeholder='Detay Giriniz'
                     focusBorderColor='lime'
                     borderColor='green.700'
                     isRequired={true}
@@ -65,7 +65,7 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
                     isLoading={formState.isSubmitting}
                     type='submit'
                 >
-                    Add Point
+                    Uygula
                 </Button>
             </Center>
         </form>

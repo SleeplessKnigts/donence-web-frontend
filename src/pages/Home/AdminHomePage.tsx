@@ -4,7 +4,11 @@ import { useState } from 'react';
 import Header from '../../components/atoms/Header';
 import Sidebar from '../../components/molecules/Sidebar';
 import AddRecyclePoint from '../AdminPanel/AddRecyclePoint';
+import { EventList } from '../AdminPanel/EventList';
 import RecyclePointList from '../AdminPanel/RecyclePointList';
+import { RequestList } from '../AdminPanel/RequestList';
+import { UserPermissions } from '../AdminPanel/UserPermissions';
+import { EventPoints } from '../User/EventPoints';
 
 const smVariant = { navigation: 'drawer', navigationButton: true };
 const mdVariant = { navigation: 'sidebar', navigationButton: false };
@@ -15,6 +19,7 @@ var ComponentTitles: { [key: string]: string } = {
     'Geri Dönüşüm Noktası Ekle': 'geri-donusum-noktasi-ekle',
     'Etkinlikleri Listele': 'etkinlikler',
     'Etkinlik Ekle': 'etkinlik-ekle',
+    'Kullanıcı Yetkilerini Düzenle': 'kullanici-yetkileri',
 };
 //TODO @marfsahin refactor component invoking
 export const AdminHomePage = () => {
@@ -28,6 +33,7 @@ export const AdminHomePage = () => {
         'Geri Dönüşüm Noktası Ekle',
         'Etkinlikleri Listele',
         'Etkinlik Ekle',
+        'Kullanıcı Yetkilerini Düzenle',
     ];
     console.log(component);
 
@@ -47,7 +53,7 @@ export const AdminHomePage = () => {
                     titleText='Admin Paneli'
                 />
                 {ComponentTitles[component] === 'kullanici-istekleri' && (
-                    <RecyclePointList />
+                    <RequestList />
                 )}
                 {ComponentTitles[component] === 'geri-donusum-noktalari' && (
                     <RecyclePointList />
@@ -55,11 +61,12 @@ export const AdminHomePage = () => {
                 {ComponentTitles[component] === 'geri-donusum-noktasi-ekle' && (
                     <AddRecyclePoint />
                 )}
-                {ComponentTitles[component] === 'etkinlikler' && (
-                    <RecyclePointList />
-                )}
+                {ComponentTitles[component] === 'etkinlikler' && <EventList />}
                 {ComponentTitles[component] === 'etkinlik-ekle' && (
                     <RecyclePointList />
+                )}
+                {ComponentTitles[component] === 'kullanici-yetkileri' && (
+                    <UserPermissions />
                 )}
             </Box>
         </>
