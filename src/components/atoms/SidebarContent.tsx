@@ -29,7 +29,12 @@ export const SidebarContent: React.FC<SidebarContentProps> = ({
         <VStack>
             {buttonNames.map((name) => (
                 <>
-                    <Button w='100%' onClick={() => handleClick(name)}>
+                    <Button
+                        w='100%'
+                        color='green.100'
+                        bg='green.700'
+                        onClick={() => handleClick(name)}
+                    >
                         {name}
                     </Button>
                 </>

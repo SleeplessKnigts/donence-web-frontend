@@ -18,13 +18,15 @@ import {
     ModalBody,
     ModalFooter,
     useDisclosure,
-} from "@chakra-ui/react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { api } from "../../shared/api/api";
-import { useEffect, useState } from "react";
-import { RecyclePoint } from "../../shared/types";
-import { faEdit, faTrashAlt } from "@fortawesome/free-solid-svg-icons";
-import AddRecyclePoint from "./AddRecyclePoint";
+} from '@chakra-ui/react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { api } from '../../shared/api/api';
+import { useEffect, useState } from 'react';
+import { RecyclePoint } from '../../shared/types';
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import AddRecyclePoint from './AddRecyclePoint';
+import { GoogleMap } from '@react-google-maps/api';
+import { MapPoints } from '../../components/molecules/MapPoints';
 
 export const RecyclePointList = () => {
     //TODO useQuery
@@ -54,7 +56,13 @@ export const RecyclePointList = () => {
     };
     return (
         <Grid m={4}>
-            <Table variant="simple" colorScheme="teal" size="sm">
+            <Table
+                variant='simple'
+                colorScheme='teal'
+                size='sm'
+                color='green.700'
+                fontWeight='bold'
+            >
                 <TableCaption>Recycle Point Locations</TableCaption>
                 <Thead>
                     <Tr>
@@ -71,7 +79,7 @@ export const RecyclePointList = () => {
                             <Td isNumeric>{point.lng}</Td>
                             <Td>
                                 <Center>
-                                    <Button colorScheme="blue">
+                                    <Button colorScheme='blue'>
                                         <FontAwesomeIcon
                                             icon={faEdit}
                                             onClick={() =>
@@ -83,7 +91,7 @@ export const RecyclePointList = () => {
                             </Td>
                             <Td>
                                 <Center>
-                                    <Button colorScheme="red">
+                                    <Button colorScheme='red'>
                                         <FontAwesomeIcon icon={faTrashAlt} />
                                     </Button>
                                 </Center>
@@ -100,8 +108,24 @@ export const RecyclePointList = () => {
                 </Tfoot>
             </Table>
             {showUpdatePopup && (
-                <Modal isOpen={isOpen} onClose={onClose} size="full">
-                    <AddRecyclePoint currentPoint={clickedPoint} />
+                <Modal isOpen={isOpen} onClose={onClose} size='full'>
+                    <ModalOverlay />
+                    <ModalContent>
+                        <ModalHeader>
+                            Geri Dönüşüm Noktasi Güncelleme
+                        </ModalHeader>
+                        <ModalCloseButton />
+                        <ModalBody>
+                            <AddRecyclePoint currentPoint={clickedPoint} />
+                        </ModalBody>
+
+                        <ModalFooter>
+                            <Button colorScheme='blue' mr={3} onClick={onClose}>
+                                Close
+                            </Button>
+                            <Button variant='ghost'>Secondary Action</Button>
+                        </ModalFooter>
+                    </ModalContent>
                 </Modal>
             )}
         </Grid>
