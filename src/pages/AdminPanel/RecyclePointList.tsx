@@ -18,6 +18,7 @@ import {
     ModalBody,
     ModalFooter,
     useDisclosure,
+    Container,
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { api } from '../../shared/api/api';
@@ -55,80 +56,90 @@ export const RecyclePointList = () => {
         onOpen();
     };
     return (
-        <Grid m={4}>
-            <Table
-                variant='simple'
-                colorScheme='teal'
-                size='sm'
-                color='green.700'
-                fontWeight='bold'
-            >
-                <TableCaption>Recycle Point Locations</TableCaption>
-                <Thead>
-                    <Tr>
-                        <Th>Recycle point name</Th>
-                        <Th isNumeric>Latitude</Th>
-                        <Th isNumeric>Longitude</Th>
-                    </Tr>
-                </Thead>
-                <Tbody>
-                    {points.map((point) => (
+        <Container centerContent maxW='container.lg'>
+            <Grid m={4}>
+                <Table
+                    variant='simple'
+                    colorScheme='teal'
+                    size='sm'
+                    color='green.100'
+                    fontWeight='bold'
+                >
+                    <TableCaption>Geri Dönüşüm Noktaları</TableCaption>
+                    <Thead>
                         <Tr>
-                            <Td>{point.recyclePointDetail}</Td>
-                            <Td isNumeric>{point.lat}</Td>
-                            <Td isNumeric>{point.lng}</Td>
-                            <Td>
-                                <Center>
-                                    <Button colorScheme='blue'>
-                                        <FontAwesomeIcon
-                                            icon={faEdit}
-                                            onClick={() =>
-                                                handleUpdateClick(point)
-                                            }
-                                        />
-                                    </Button>
-                                </Center>
-                            </Td>
-                            <Td>
-                                <Center>
-                                    <Button colorScheme='red'>
-                                        <FontAwesomeIcon icon={faTrashAlt} />
-                                    </Button>
-                                </Center>
-                            </Td>
+                            <Th>Geri Dönüşüm Noktasi isimleri</Th>
+                            <Th isNumeric>Latitude</Th>
+                            <Th isNumeric>Longitude</Th>
                         </Tr>
-                    ))}
-                </Tbody>
-                <Tfoot>
-                    <Tr>
-                        <Th>Recycle point name</Th>
-                        <Th isNumeric>Latitude</Th>
-                        <Th isNumeric>Longitude</Th>
-                    </Tr>
-                </Tfoot>
-            </Table>
-            {showUpdatePopup && (
-                <Modal isOpen={isOpen} onClose={onClose} size='full'>
-                    <ModalOverlay />
-                    <ModalContent>
-                        <ModalHeader>
-                            Geri Dönüşüm Noktasi Güncelleme
-                        </ModalHeader>
-                        <ModalCloseButton />
-                        <ModalBody>
-                            <AddRecyclePoint currentPoint={clickedPoint} />
-                        </ModalBody>
+                    </Thead>
+                    <Tbody>
+                        {points.map((point) => (
+                            <Tr>
+                                <Td>{point.recyclePointDetail}</Td>
+                                <Td isNumeric>{point.lat}</Td>
+                                <Td isNumeric>{point.lng}</Td>
+                                <Td>
+                                    <Center>
+                                        <Button colorScheme='blue'>
+                                            <FontAwesomeIcon
+                                                icon={faEdit}
+                                                onClick={() =>
+                                                    handleUpdateClick(point)
+                                                }
+                                            />
+                                        </Button>
+                                    </Center>
+                                </Td>
+                                <Td>
+                                    <Center>
+                                        <Button colorScheme='red'>
+                                            <FontAwesomeIcon
+                                                icon={faTrashAlt}
+                                            />
+                                        </Button>
+                                    </Center>
+                                </Td>
+                            </Tr>
+                        ))}
+                    </Tbody>
+                    <Tfoot>
+                        <Tr>
+                            <Th>Geri Dönüşüm Noktasi İsimleri</Th>
+                            <Th isNumeric>Latitude</Th>
+                            <Th isNumeric>Longitude</Th>
+                        </Tr>
+                    </Tfoot>
+                </Table>
+                {showUpdatePopup && (
+                    <Modal isOpen={isOpen} onClose={onClose} size='full'>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>
+                                Geri Dönüşüm Noktasi Güncelleme
+                            </ModalHeader>
+                            <ModalCloseButton />
+                            <ModalBody>
+                                <AddRecyclePoint currentPoint={clickedPoint} />
+                            </ModalBody>
 
-                        <ModalFooter>
-                            <Button colorScheme='blue' mr={3} onClick={onClose}>
-                                Close
-                            </Button>
-                            <Button variant='ghost'>Secondary Action</Button>
-                        </ModalFooter>
-                    </ModalContent>
-                </Modal>
-            )}
-        </Grid>
+                            <ModalFooter>
+                                <Button
+                                    colorScheme='blue'
+                                    mr={3}
+                                    onClick={onClose}
+                                >
+                                    Close
+                                </Button>
+                                <Button variant='ghost'>
+                                    Secondary Action
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
+                )}
+            </Grid>
+        </Container>
     );
 };
 
