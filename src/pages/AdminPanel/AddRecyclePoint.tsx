@@ -1,9 +1,9 @@
-import { Button, Center, FormControl, Input } from "@chakra-ui/react";
-import React, { useState } from "react";
-import Map from "../../components/organisms/Map/Map";
-import { useForm } from "react-hook-form";
-import { api } from "../../shared/api/api";
-import { RecyclePoint } from "../../shared/types";
+import { Button, Center, FormControl, Input } from '@chakra-ui/react';
+import React, { useEffect, useState } from 'react';
+import Map from '../../components/organisms/Map/Map';
+import { useForm } from 'react-hook-form';
+import { api } from '../../shared/api/api';
+import { RecyclePoint } from '../../shared/types';
 
 type AddRecyclePointProps = {
     currentPoint?: RecyclePoint;
@@ -13,14 +13,18 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
     currentPoint,
 }) => {
     const [currentLoc, setCurrentLoc] = useState<RecyclePoint>({
-        recyclePointDetail: "Geri donusum noktasi",
+        recyclePointDetail: 'Geri donusum noktasi',
         lat: 39.904239006864785,
         lng: 32.87195490942385,
     });
 
-    if (currentPoint) {
-        setCurrentLoc(currentPoint);
-    }
+    useEffect(() => {
+        if (currentPoint) {
+            setCurrentLoc(currentPoint);
+            console.log(currentPoint);
+            console.log(currentLoc);
+        }
+    }, [currentPoint]);
     const { handleSubmit, register, formState } = useForm();
 
     function onSubmit(values: {
@@ -46,20 +50,20 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
             <FormControl>
                 <Input
                     m={2}
-                    name="recyclePointDetail"
-                    placeholder="Description"
-                    focusBorderColor="lime"
-                    borderColor="green.700"
+                    name='recyclePointDetail'
+                    placeholder='Description'
+                    focusBorderColor='lime'
+                    borderColor='green.700'
                     isRequired={true}
                     ref={register({ required: true })}
                 />
             </FormControl>
             <Center>
                 <Button
-                    colorScheme="teal"
+                    colorScheme='teal'
                     m={2}
                     isLoading={formState.isSubmitting}
-                    type="submit"
+                    type='submit'
                 >
                     Add Point
                 </Button>

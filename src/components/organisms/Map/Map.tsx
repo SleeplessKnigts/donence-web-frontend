@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import "./map.css";
+import React, { useEffect, useState } from 'react';
+import './map.css';
 import {
     GoogleMap,
     LoadScript,
     Marker,
     InfoWindow,
-} from "@react-google-maps/api";
-import { RecyclePoint } from "../../../shared/types";
+} from '@react-google-maps/api';
+import { RecyclePoint } from '../../../shared/types';
 
 type MapProps = {
     setCurrentLoc: Function;
@@ -15,8 +15,8 @@ type MapProps = {
     pointList?: RecyclePoint[];
 };
 const containerStyle = {
-    height: "100%",
-    width: "100w",
+    height: '100%',
+    width: '100w',
 };
 
 export const Map: React.FC<MapProps> = ({
@@ -45,19 +45,21 @@ export const Map: React.FC<MapProps> = ({
     };
 
     return (
-        <div className="map">
-            <h2 className="map-h2">ADD RECYCLE POINT FROM THE MAP BELOW</h2>
-            <div className="google-map">
-                <LoadScript googleMapsApiKey="AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y">
+        <div className='map'>
+            <h2 className='map-h2'>
+                İŞARETLEYİCİ İLE GERİ DÖNÜŞÜM NOKTASINI BELİRLEYİN
+            </h2>
+            <div className='google-map'>
+                <LoadScript googleMapsApiKey='AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y'>
                     <GoogleMap
                         mapContainerStyle={containerStyle}
                         center={loc}
-                        zoom={10}
+                        zoom={15}
                     >
                         {addPoint ? (
                             <>
                                 <Marker
-                                    key="point"
+                                    key='point'
                                     onClick={() => setShow(true)}
                                     position={loc}
                                     draggable={true}
