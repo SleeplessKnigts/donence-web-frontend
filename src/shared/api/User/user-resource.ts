@@ -1,5 +1,5 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { UserInfo } from "../../types";
+import { RecyclePoint, UserInfo } from "../../types";
 
 
 export class UserResource {
@@ -15,4 +15,8 @@ export class UserResource {
                 return error;
             });
     };
+
+    getRecyclingPoints = () : Promise<RecyclePoint[]> => {
+        return this.axios.get("user/recycle-point/", this.axiosRequestConfig).then((response) => response.data);
+    }
 }

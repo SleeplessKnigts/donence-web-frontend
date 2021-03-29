@@ -7,7 +7,7 @@ import { api } from "../../shared/api/api";
 
 export const RecyclingPoints: React.FC = () => {
     const { data: userInfo, isFetched } = useQuery("getProfileInfo", api.user.getProfileInfo);
-    const { data: recylingPoints } = useQuery("recyclingPoints", api.admin.getRecyclePoints);
+    const { data: recylingPoints } = useQuery("recyclingPoints", api.user.getRecyclingPoints);
 
     let component = <Spinner size="lg" />;
 
