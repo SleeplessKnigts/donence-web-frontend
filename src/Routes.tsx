@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 import { AuthContext } from "./context/AuthContext";
 import AddRecyclePoint from "./pages/AdminPanel/AddRecyclePoint";
@@ -10,49 +10,45 @@ import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
 import { EventPoints } from "./pages/User/EventPoints";
 import { RecyclingPoints } from "./pages/User/RecyclingPoints";
 
+interface routeProps {
+    exact: boolean;
+    path: string;
+    component: React.FC;
+}
+
 export const Routes: React.FC = () => {
     const { userType } = useContext(AuthContext);
 
-    let authorizedRouteSet;
-    switch (userType) {
-        case "395cc606-30da-4789-9bd3-acc1add79ef9":
-            authorizedRouteSet = [
-                <Route exact path="/admin" component={AdminPanel} />,
-                <Route exact path="/admin/recycle-point" component={AddRecyclePoint} />,
-                <Route exact path="/admin/recycle-point/new" component={AddRecyclePoint} />,
-                <Route exact path="/admin/kullanici-yetkileri" component={UserPermissions} />,
-            ];
-            break;
-        case "8a6ee639-a7e6-456f-af12-2b714df5fecd":
-            authorizedRouteSet = [
-                <Route
-                    exact
-                    path="/user/panel"
-                    component={() => <h1>User panel, admin should not see the layout</h1>}
-                />,
-                <Route exact path="/donusum-noktalari" component={RecyclingPoints} />,
-                <Route exact path="/toplama-noktalari" component={EventPoints} />,
-                <Route exact path="/user/katkilarim" component={() => <h1>Katkilarim</h1>} />,
-                <Route exact path="/user/me" component={() => <h1>Kullanici bilgileri</h1>} />,
-            ];
-            break;
-        case "2612bedd-ae65-4ed6-a8e1-8c7f868294d6":
-            authorizedRouteSet = [
-                <Route
-                    exact
-                    path="/driver/panel"
-                    component={() => <h1>Driver panel, admin should not see the layout</h1>}
-                />,
-            ];
-            break;
-        default:
-            break;
-    }
+    const [authorizedRouteSet, setAuthorizedRouteSet] = useState<routeProps[]>();
+
+    useEffect(() => {
+        switch (userType) {
+            case "395cc606-30da-4789-9bd3-acc1add79ef9":
+                setAuthorizedRouteSet([
+                    { component: AdminPanel, path: "/admin", exact: true },
+                    { component: AddRecyclePoint, path: "/admin/recycle-point", exact: true },
+                    { component: AddRecyclePoint, path: "/admin/recycle-point/new", exact: true },
+                    { component: UserPermissions, path: "/admin/kullanici-yetkileri", exact: true },
+                ]);
+                break;
+            case "8a6ee639-a7e6-456f-af12-2b714df5fecd":
+                setAuthorizedRouteSet([
+                    { component: RecyclingPoints, path: "/donusum-noktalari", exact: true },
+                    { component: EventPoints, path: "/toplama-noktalari", exact: true },
+                    { component: () => <h1>Katkilarim</h1>, path: "/user/katkilarim", exact: true },
+                    { component: () => <h1>Kullanici bilgileri</h1>, path: "/user/me", exact: true },
+                ]);
+
+                break;
+            default:
+                break;
+        }
+    }, [userType]);
 
     return (
         <Switch>
-            {authorizedRouteSet?.map((el, index) => {
-                return el;
+            {authorizedRouteSet?.map((el) => {
+                return <Route path={el.path} component={el.component} key={el.path} exact={el.exact} />;
             })}
             <Route exact path="/haberler" component={() => <h1>Haberler page</h1>} />
             <Route exact path="/giris-yap" component={Login} />
