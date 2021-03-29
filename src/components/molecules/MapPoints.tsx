@@ -1,8 +1,6 @@
-import { Container } from "@chakra-ui/layout";
-import { GoogleMap, LoadScript, Marker } from "@react-google-maps/api";
-import React from "react";
-import { useQuery } from "react-query";
-import { api } from "../../shared/api/api";
+import { Box } from "@chakra-ui/layout";
+import { GoogleMap, InfoWindow, LoadScript, Marker } from "@react-google-maps/api";
+import React, { useState } from "react";
 import { RecyclePoint } from "../../shared/types";
 
 export interface MapPoinstProps {
@@ -15,14 +13,30 @@ const containerStyle = {
     height: "600px",
 };
 
-export const MapPoints: React.FC<MapPoinstProps> = ({ points, center={lat: 39.925533, lng: 32.866287}}) => {
-    console.log(center);
+export const MapPoints: React.FC<MapPoinstProps> = ({ points, center = { lat: 39.925533, lng: 32.866287 } }) => {
+    const [position, setPosition] = useState<RecyclePoint | null>(null);
+
     return (
         <LoadScript googleMapsApiKey="AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y">
             <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
-                {points?.map((el) => {
-                    return <Marker position={{ lat: el.lat, lng: el.lng }} label={el.recyclePointDetail}></Marker>;
+                {points?.map((el, index) => {
+                    return (
+                        <Marker
+                            key={index}
+                            position={{ lat: el.lat, lng: el.lng }}
+                            title={el.recyclePointDetail}
+                            onClick={() => setPosition(el)}
+                        />
+                    );
                 })}
+                {position && (
+                    <InfoWindow
+                        position={{ lat: position.lat, lng: position.lng }}
+                        onCloseClick={() => setPosition(null)}
+                    >
+                        <Box p="4">{position.recyclePointDetail}</Box>
+                    </InfoWindow>
+                )}
             </GoogleMap>
         </LoadScript>
     );
