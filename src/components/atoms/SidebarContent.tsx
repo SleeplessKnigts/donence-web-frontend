@@ -1,44 +1,31 @@
-import { Button } from '@chakra-ui/button';
-import { VStack } from '@chakra-ui/layout';
-import { useEffect, useState } from 'react';
+import { Button } from "@chakra-ui/button";
+import { VStack } from "@chakra-ui/layout";
+import { useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 type SidebarContentProps = {
     setComponent?: Function;
-    buttonTitles?: string[];
+    buttonTitles: {
+        [key: string]: string;
+    };
 };
 
-export const SidebarContent: React.FC<SidebarContentProps> = ({
-    setComponent,
-    buttonTitles,
-}) => {
-    const [buttonNames, setButtonNames] = useState<string[]>([]);
-
-    useEffect(() => {
-        if (buttonTitles) {
-            setButtonNames(buttonTitles);
-        }
-    }, []);
+export const SidebarContent: React.FC<SidebarContentProps> = ({ setComponent, buttonTitles }) => {
+    let history = useHistory();
 
     const handleClick = (name: string) => {
-        if (setComponent) {
-            setComponent(name);
-        }
+        history.push(name);
     };
 
     return (
         <VStack>
-            {buttonNames.map((name) => (
-                <>
-                    <Button
-                        w='100%'
-                        color='green.100'
-                        bg='green.700'
-                        onClick={() => handleClick(name)}
-                    >
-                        {name}
+            {Object.keys(buttonTitles).map((key, _idx) => {
+                return (
+                    <Button w="100%" color="green.100" bg="green.700" onClick={() => handleClick(buttonTitles[key])}>
+                        {key}
                     </Button>
-                </>
-            ))}
+                );
+            })}
         </VStack>
     );
 };
