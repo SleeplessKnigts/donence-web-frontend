@@ -22,6 +22,7 @@ export const Routes: React.FC = () => {
 
     const [authorizedRouteSet, setAuthorizedRouteSet] = useState<routeProps[]>();
 
+    console.log(userType);
     useEffect(() => {
         switch (userType) {
             case "395cc606-30da-4789-9bd3-acc1add79ef9":
@@ -36,9 +37,9 @@ export const Routes: React.FC = () => {
                     { component: () => <h1>Katkilarim</h1>, path: "/user/katkilarim", exact: true },
                     { component: () => <h1>Kullanici bilgileri</h1>, path: "/user/me", exact: true },
                 ]);
-
                 break;
             default:
+                setAuthorizedRouteSet([]);
                 break;
         }
     }, [userType]);
