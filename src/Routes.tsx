@@ -1,9 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Route, Switch } from "react-router";
 import { AuthContext } from "./context/AuthContext";
-import { AddNews } from "./pages/AdminPanel/AddNews";
-import AddRecyclePoint from "./pages/AdminPanel/AddRecyclePoint";
-import { UserPermissions } from "./pages/AdminPanel/UserPermissions";
 import { AdminHomePage } from "./pages/Home/AdminHomePage";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
@@ -27,7 +24,7 @@ export const Routes: React.FC = () => {
         switch (userType) {
             case "395cc606-30da-4789-9bd3-acc1add79ef9":
                 setAuthorizedRouteSet([
-                    { component: AdminHomePage, path: "/", exact: false },
+                    { component: AdminHomePage, path: "/admin", exact: false },
                 ]);
                 break;
             case "8a6ee639-a7e6-456f-af12-2b714df5fecd":
