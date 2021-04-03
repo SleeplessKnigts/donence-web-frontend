@@ -28,3 +28,9 @@ export interface CollectionEvent{
     lat:number,
     lng:number,
 }
+
+export interface News {
+    heading: string,
+    imageUrl: string,
+    content: string,
+}

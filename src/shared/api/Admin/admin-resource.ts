@@ -20,8 +20,7 @@ export class AdminResource {
     getRequestList = (): Promise<UserRequest[]> =>
         this.axios.get("admin/requests", this.axiosRequestConfig).then((r) => r.data);
 
-    
-    getUserRequestList = (data?: string, isActive?: boolean): Promise<Request[]>=> 
+    getUserRequestList = (data?: string, isActive?: boolean): Promise<Request[]> =>
         this.axios.get("admin/requests/" + data + "/" + isActive, this.axiosRequestConfig).then((r) => r.data);
 
     getEventList = (): Promise<CollectionEvent[]> =>
@@ -29,4 +28,11 @@ export class AdminResource {
 
     newEventList = (data: CollectionEvent) =>
         this.axios.post("admin/admin/collection-event/new", data, this.axiosRequestConfig).then((r) => r.data);
+
+    createNews = (data: any) => {
+        return this.axios
+            .post("admin/news", data, this.axiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
 }
