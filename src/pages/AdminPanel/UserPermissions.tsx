@@ -9,14 +9,13 @@ import { api } from "../../shared/api/api";
 
 export const UserPermissions: React.FC = () => {
     const { register, handleSubmit } = useForm();
-    const mutation = useMutation(api.admin.assignNewRole);
+    const mutation = useMutation(api.admin.assignNewRole, {onSuccess: () => {
+        alert("İşleminiz başarıyla gerçekleştirildi.")
+    }});
 
     const onSubmit = (data: any) => {
         console.log(data)
         mutation.mutate(data)
-        if(mutation.isSuccess){
-            alert("İşleminiz başarıyla gerçekleştirildi.")
-        }
     };
 
 
