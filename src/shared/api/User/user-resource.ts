@@ -1,6 +1,5 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { RecyclePoint, UserInfo } from "../../types";
-
+import { NewsResponse, RecyclePoint, UserInfo } from "../../types";
 
 export class UserResource {
     constructor(private axios: AxiosInstance = axiosStatic, private axiosRequestConfig: AxiosRequestConfig = {}) {}
@@ -16,7 +15,21 @@ export class UserResource {
             });
     };
 
-    getRecyclingPoints = () : Promise<RecyclePoint[]> => {
+    getRecyclingPoints = (): Promise<RecyclePoint[]> => {
         return this.axios.get("user/recycle-point/", this.axiosRequestConfig).then((response) => response.data);
-    }
+    };
+
+    getAllNews = (): Promise<NewsResponse[]> => {
+        return this.axios
+            .get("user/news", this.axiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
+
+    getNewsById = (id: number): Promise<NewsResponse> => {
+        return this.axios
+            .get(`user/news/${id}`, this.axiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
 }

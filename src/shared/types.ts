@@ -29,8 +29,15 @@ export interface CollectionEvent{
     lng:number,
 }
 
-export interface News {
+export interface News{
     heading: string,
     imageUrl: string,
     content: string,
+}
+export interface NewsResponse {
+    heading: string,
+    imageUrl: string,
+    content: string,
+    createdAt: string,
+    id: string,
 }
