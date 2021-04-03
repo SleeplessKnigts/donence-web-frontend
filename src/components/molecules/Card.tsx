@@ -10,23 +10,30 @@ export interface CardProps {
     heading: string;
     content: string;
     imageUrl: string;
-    url: string;
+    url?: string;
 }
 
 export const Card: React.FC<CardProps> = ({ heading, content, imageUrl, url }) => {
     return (
-        <Box maxWidth="md" borderRadius="md" overflow="hidden" boxShadow="dark-lg">
+        <Box borderRadius="md" overflow="hidden" boxShadow="dark-lg">
             <Image src={imageUrl} alt={imageUrl} />
             <Box p="2">
-                <VStack alignItems="start"  marginY="2" spacing="1">
-                    <Heading fontSize="2xl" fontWeight="bold" flexWrap="nowrap">
-                        {heading}
-                    </Heading>
-                    <Text>{content.substring(0, 250)}...</Text>
-                    <Link as={RouterLink} to={url} alignSelf="flex-end">
-                        Devamını Oku
-                        <Icon as={FontAwesomeIcon} icon={faChevronRight} mx="1"/>
-                    </Link>
+                <VStack alignItems="start" marginY="2" spacing="1">
+                    <Heading
+                        fontSize={url ? "2xl" : "3xl"}
+                        fontWeight="bold"
+                        flexWrap="nowrap"
+                        dangerouslySetInnerHTML={{ __html: heading }}
+                    ></Heading>
+                    <Box height={url ? "140px" : "full"} overflow="hidden">
+                        <Box dangerouslySetInnerHTML={{ __html: content }}></Box>
+                    </Box>
+                    {url && (
+                        <Link as={RouterLink} to={url} alignSelf="flex-end" color="GrayText">
+                            Devamını Oku
+                            <Icon as={FontAwesomeIcon} icon={faChevronRight} mx="1" />
+                        </Link>
+                    )}
                 </VStack>
             </Box>
         </Box>
