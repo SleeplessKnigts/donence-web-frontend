@@ -1,5 +1,5 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { AssignRole, CollectionEvent, RecyclePoint, UserRequest } from "../../types";
+import { AssignRole, CollectionEvent, News, RecyclePoint, UserRequest } from "../../types";
 
 export class AdminResource {
     constructor(private axios: AxiosInstance = axiosStatic, private axiosRequestConfig: AxiosRequestConfig = {}) {}
@@ -29,7 +29,7 @@ export class AdminResource {
     newEventList = (data: CollectionEvent) =>
         this.axios.post("admin/admin/collection-event/new", data, this.axiosRequestConfig).then((r) => r.data);
 
-    createNews = (data: any) => {
+    createNews = (data: News) => {
         return this.axios
             .post("admin/news", data, this.axiosRequestConfig)
             .then((response) => response.data)
