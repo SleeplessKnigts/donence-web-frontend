@@ -5,6 +5,7 @@ import { AdminHomePage } from "./pages/Home/AdminHomePage";
 import { Home } from "./pages/Home/Home";
 import { Login } from "./pages/Login/Login";
 import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
+import { News } from "./pages/Shared/News";
 import { EventPoints } from "./pages/User/EventPoints";
 import { RecyclingPoints } from "./pages/User/RecyclingPoints";
 
@@ -46,7 +47,7 @@ export const Routes: React.FC = () => {
             {authorizedRouteSet?.map((el) => {
                 return <Route path={el.path} component={el.component} key={el.path} exact={el.exact} />;
             })}
-            <Route exact path="/haberler" component={() => <h1>Haberler page</h1>} />
+            <Route exact path="/haberler" component={News} />
             <Route exact path="/giris-yap" component={Login} />
             <Route path="/oauth2/redirect" component={OAuth2RedirectHandler} />
             <Route exact path="/" component={Home} />
