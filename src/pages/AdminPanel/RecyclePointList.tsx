@@ -62,7 +62,7 @@ export const RecyclePointList = () => {
                     variant='simple'
                     colorScheme='teal'
                     size='sm'
-                    color='green.100'
+                    color='gray.800'
                     fontWeight='bold'
                 >
                     <TableCaption>Geri Dönüşüm Noktaları</TableCaption>

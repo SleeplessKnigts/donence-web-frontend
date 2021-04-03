@@ -11,7 +11,7 @@ export const NewsDetail: React.FC = () => {
     const { id } = useParams<{ id: any }>();
     const { data: newsDetail, isFetched } = useQuery(["news", id], () => api.user.getNewsById(id));
 
-    let resp = <Spinner size="lg" alignSelf="center" />;
+    let resp = <Spinner size="lg" marginY="16" />;
 
     if (isFetched && newsDetail) {
         resp = (
@@ -24,7 +24,7 @@ export const NewsDetail: React.FC = () => {
     }
 
     return (
-        <Container maxWidth="container.lg" marginY="8">
+        <Container maxWidth="container.lg" marginY="8" centerContent>
             {resp}
         </Container>
     );

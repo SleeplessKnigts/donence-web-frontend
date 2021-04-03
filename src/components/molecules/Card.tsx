@@ -16,17 +16,17 @@ export interface CardProps {
 export const Card: React.FC<CardProps> = ({ heading, content, imageUrl, url }) => {
     return (
         <Box borderRadius="md" overflow="hidden" boxShadow="dark-lg">
-            <Image src={imageUrl} alt={imageUrl} />
+            <Image src={imageUrl} alt={imageUrl} width="100%" />
             <Box p="2">
                 <VStack alignItems="start" marginY="2" spacing="1">
-                    <Heading
-                        fontSize={url ? "2xl" : "3xl"}
-                        fontWeight="bold"
-                        flexWrap="nowrap"
-                        dangerouslySetInnerHTML={{ __html: heading }}
-                    ></Heading>
-                    <Box height={url ? "140px" : "full"} overflow="hidden">
-                        <Box dangerouslySetInnerHTML={{ __html: content }}></Box>
+                    <Box height={url ? "140px" : "full"} marginX="8" overflow="hidden">
+                        <Heading
+                            fontSize={url ? "2xl" : "3xl"}
+                            fontWeight="bold"
+                            flexWrap="nowrap"
+                            dangerouslySetInnerHTML={{ __html: heading }}
+                        ></Heading>
+                        <div dangerouslySetInnerHTML={{ __html: content }}></div>
                     </Box>
                     {url && (
                         <Link as={RouterLink} to={url} alignSelf="flex-end" color="GrayText">

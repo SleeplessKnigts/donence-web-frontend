@@ -10,8 +10,9 @@ const theme = extendTheme({ colors: colors,
     config: {initialColorMode : "light"}, 
     styles: {
         global: {
-            body: {
-                bg: "gray.200"
+            "html, body": {
+                bg: "gray.200",
+                color: "black"
             }
         }
     }

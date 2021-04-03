@@ -6,13 +6,12 @@ import { Card } from "../../components/molecules/Card";
 import { api } from "../../shared/api/api";
 
 export const News: React.FC = () => {
-    const { data: allNews, isFetched } = useQuery("getProfileInfo", api.user.getAllNews);
+    const { data: allNews, isFetched } = useQuery("getAllNews", api.user.getAllNews);
 
-    console.log(allNews);
-
-    let comp = <Spinner size="xl" />;
+    let comp = <Spinner size="xl" marginY="16" />;
 
     if (isFetched && allNews) {
+        console.log(allNews);
         comp = (
             <>
                 <Heading my="4">Güncel Haberler</Heading>
@@ -32,5 +31,9 @@ export const News: React.FC = () => {
         );
     }
 
-    return <Container maxW="container.lg">{comp}</Container>;
+    return (
+        <Container maxW="container.lg" centerContent>
+            {comp}
+        </Container>
+    );
 };
