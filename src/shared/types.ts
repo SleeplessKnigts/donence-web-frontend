@@ -2,6 +2,7 @@ export interface RecyclePoint {
     recyclePointDetail: string;
     lat: number;
     lng: number;
+    recyclyPointPlaceType: "Yağ" | "Elektronik" | "Kağıt" | "Plastik" | "Pil" | "Cam";
 }
 export interface AssignRole {
     email: string;
