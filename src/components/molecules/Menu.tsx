@@ -16,23 +16,14 @@ export const Menu: React.FC<MenuToggleProps> = (props) => {
         case "395cc606-30da-4789-9bd3-acc1add79ef9":
             authenticatedMenuElements = (
                 <>
-                    <MenuItem to={"/haberler"}>Haberler</MenuItem>
+                    <MenuItem to={"/haberler"}>Only admin can see this</MenuItem>
                 </>
             );
             break;
         case "8a6ee639-a7e6-456f-af12-2b714df5fecd":
             authenticatedMenuElements = (
                 <>
-                    <MenuItem to={"/haberler"}>Haberler</MenuItem>
                     <MenuItem to={"/panel"}>Only user can see this</MenuItem>
-                </>
-            );
-            break;
-        case "2612bedd-ae65-4ed6-a8e1-8c7f868294d6":
-            authenticatedMenuElements = (
-                <>
-                    <MenuItem to={"/haberler"}>Haberler</MenuItem>
-                    <MenuItem to={"/panel"}>Only driver can see this</MenuItem>
                 </>
             );
             break;
