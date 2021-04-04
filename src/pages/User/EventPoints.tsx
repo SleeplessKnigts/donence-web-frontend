@@ -17,7 +17,7 @@ export const EventPoints: React.FC = () => {
                 <Heading marginY="8">Etkinlik Noktaları</Heading>
                 <MapPoints
                     center={{ lat: userInfo?.lat, lng: userInfo?.lng }}
-                    points={[]}
+                    recyclePoints={[]}
                 />
             </Container>
         );

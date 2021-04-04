@@ -17,10 +17,17 @@ export interface UserInfo{
     fname: string,
 }
 
+export interface Issuer{
+    latitude: number,
+    longitude: number,
+    postalCode: string,
+}
+
 export interface UserRequest{
-    requestType: string, 
+    requestType: "Yağ" | "Elektronik" | "Kağıt" | "Plastik" | "Pil" | "Cam", 
     creationDate: Date,
     isActive:boolean,
+    issuer: Issuer,
 }
 
 export interface CollectionEvent{

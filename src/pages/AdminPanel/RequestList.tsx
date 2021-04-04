@@ -26,6 +26,7 @@ import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
 import { UserRequest } from '../../shared/types';
 
@@ -47,6 +48,7 @@ export const RequestList: React.FC = () => {
     };
 
     let component = <Spinner size='lg' />;
+    let map = null;
     if (isFetched) {
         console.log(requestList);
         component = (
@@ -71,7 +73,7 @@ export const RequestList: React.FC = () => {
                         </Tr>
                     </Thead>
 
-                    <Tbody>
+                    <Tbody color="black">
                         {requestList?.map((request) => (
                             <Tr>
                                 <Td>{request.requestType}</Td>
@@ -135,11 +137,13 @@ export const RequestList: React.FC = () => {
                 )}
             </Grid>
         );
+        map = <MapPoints userRequestPoints={requestList}/> 
     }
 
     return (
         <Container centerContent maxW='container.lg'>
             {component}
+            {map}
         </Container>
     );
 };
