@@ -20,6 +20,7 @@ export interface UserInfo{
 }
 
 export interface Issuer{
+    fname: string,
     latitude: number,
     longitude: number,
     postalCode: string,
