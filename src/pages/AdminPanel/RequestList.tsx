@@ -21,6 +21,11 @@ import {
     Spinner,
     Container,
     Select,
+    Tabs,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel,
 } from '@chakra-ui/react';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -36,13 +41,13 @@ export const RequestList: React.FC = () => {
         api.admin.getRequestList
     );
     const [clickedRequest, setClickedRequest] = useState<UserRequest>();
-    const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
     // useDisclosure is a custom hook used to help handle common open, close, or toggle scenarios.
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const handleUpdateClick = (request: UserRequest) => {
+    const handleDeleteClick = (request: UserRequest) => {
         setClickedRequest(request);
-        setShowUpdatePopup(true);
+        setShowDeletePopup(true);
         console.log(request);
         onOpen();
     };
@@ -70,34 +75,26 @@ export const RequestList: React.FC = () => {
                         <Tr>
                             <Th>Materyal</Th>
                             <Th>Tarih</Th>
+                            <Th>Kullanıcı</Th>
+                            <Th>Sil</Th>
                         </Tr>
                     </Thead>
 
-                    <Tbody color="black">
+                    <Tbody color='black'>
                         {requestList?.map((request) => (
                             <Tr>
                                 <Td>{request.requestType}</Td>
                                 <Td>{request.creationDate}</Td>
+                                <Td>{request.issuer.fname}</Td>
                                 <Td>
-                                    <Center>
-                                        <Button colorScheme='blue'>
-                                            <FontAwesomeIcon
-                                                icon={faEdit}
-                                                onClick={() =>
-                                                    handleUpdateClick(request)
-                                                }
-                                            />
-                                        </Button>
-                                    </Center>
-                                </Td>
-                                <Td>
-                                    <Center>
-                                        <Button colorScheme='red'>
-                                            <FontAwesomeIcon
-                                                icon={faTrashAlt}
-                                            />
-                                        </Button>
-                                    </Center>
+                                    <Button colorScheme='red'>
+                                        <FontAwesomeIcon
+                                            icon={faTrashAlt}
+                                            onClick={() =>
+                                                handleDeleteClick(request)
+                                            }
+                                        />
+                                    </Button>
                                 </Td>
                             </Tr>
                         ))}
@@ -107,43 +104,50 @@ export const RequestList: React.FC = () => {
                         <Tr>
                             <Th>Materyal</Th>
                             <Th>Tarih</Th>
+                            <Th>Kullanıcı</Th>
+                            <Th>Sil</Th>
                         </Tr>
                     </Tfoot>
                 </Table>
-                {showUpdatePopup && (
-                    <Modal isOpen={isOpen} onClose={onClose} size='full'>
+                {showDeletePopup && (
+                    <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
                             <ModalHeader>
-                                Geri Dönüşüm Noktasi Güncelleme
+                                İsteğin silinmesini onaylıyor musunuz?
                             </ModalHeader>
                             <ModalCloseButton />
-                            <ModalBody>Temp</ModalBody>
-
                             <ModalFooter>
                                 <Button
                                     colorScheme='blue'
                                     mr={3}
                                     onClick={onClose}
                                 >
-                                    Close
+                                    Kapat
                                 </Button>
-                                <Button variant='ghost'>
-                                    Secondary Action
-                                </Button>
+                                <Button colorScheme='red'>Sil</Button>
                             </ModalFooter>
                         </ModalContent>
                     </Modal>
                 )}
             </Grid>
         );
-        map = <MapPoints userRequestPoints={requestList}/> 
+        map = <MapPoints userRequestPoints={requestList} />;
     }
 
     return (
-        <Container centerContent maxW='container.lg'>
-            {component}
-            {map}
+        <Container maxW='container.lg'>
+            <Tabs m={2} variant='soft-rounded' colorScheme='green'>
+                <TabList>
+                    <Tab>İstek Listesi</Tab>
+                    <Tab>Haritada Görüntüle</Tab>
+                </TabList>
+
+                <TabPanels>
+                    <TabPanel>{component}</TabPanel>
+                    <TabPanel>{map}</TabPanel>
+                </TabPanels>
+            </Tabs>
         </Container>
     );
 };
