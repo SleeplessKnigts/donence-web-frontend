@@ -1,6 +1,7 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { NewsResponse, RecyclePoint, UserInfo } from "../../types";
+import { NewsResponse, RecyclePoint, requestTypes, UserInfo } from "../../types";
 
+export type status = "all" | "active" | "completed";
 export class UserResource {
     constructor(private axios: AxiosInstance = axiosStatic, private axiosRequestConfig: AxiosRequestConfig = {}) {}
 
@@ -29,6 +30,21 @@ export class UserResource {
     getNewsById = (id: number): Promise<NewsResponse> => {
         return this.axios
             .get(`user/news/${id}`, this.axiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
+
+    getAllRequestsByStatus = (status: status): Promise<any> => {
+        console.log("I am being called", status);
+        return this.axios
+            .get(`user/requests/${status}`, this.axiosRequestConfig)
+            .then((response) => response.data)
+            .catch((err) => err);
+    };
+
+    getAllRequestsByStatusAndType = (status: status, requestType: requestTypes): Promise<any> => {
+        return this.axios
+            .get(`user/requests/${requestType}/${status}`, this.axiosRequestConfig)
             .then((response) => response.data)
             .catch((err) => err);
     };
