@@ -1,8 +1,10 @@
-import { Container, Heading } from '@chakra-ui/layout';
+import { Image } from '@chakra-ui/image';
+import { Container, Heading, List, ListIcon, ListItem, Text } from '@chakra-ui/layout';
 import { Spinner } from '@chakra-ui/spinner';
 import React from 'react'
 import { useQuery } from 'react-query';
 import { MapPoints } from '../../components/molecules/MapPoints';
+import { TitleToColorMapping } from '../../constants/Mappings';
 import { api } from '../../shared/api/api';
 
 export const EventPoints: React.FC = () => {
@@ -15,6 +17,20 @@ export const EventPoints: React.FC = () => {
         component = (
             <Container maxW="container.lg">
                 <Heading marginY="8">Etkinlik Noktaları</Heading>
+                <Text marginBottom="12">
+                    Aşağıda çevrenizdeki etkinlik noktalarını bulabilirsiniz. Etkinlik noktaları mahalledeki veya civardaki yoğunluğa göre belirlenir ve değişiklik gösterebilir. İşaretçilerin üstüne tıkladığınızda etkinliklerin tam yerini ve zamanını öğrenebilirsiniz.
+                    <List spacing={3}>
+                        {Object.keys(TitleToColorMapping).map((el, _idx) => {
+                            const src = Object.values(TitleToColorMapping)[_idx];
+                            return (
+                                <ListItem key={el} display="inline" marginRight="8">
+                                    <ListIcon as={Image} src={src} />
+                                    {el}
+                                </ListItem>
+                            );
+                        })}
+                    </List>
+                </Text>
                 <MapPoints
                     center={{ lat: userInfo?.lat, lng: userInfo?.lng }}
                     recyclePoints={[]}
