@@ -7,6 +7,7 @@ import { Login } from "./pages/Login/Login";
 import { OAuth2RedirectHandler } from "./pages/Login/Oauth2RedirectHandler";
 import { News } from "./pages/Shared/News";
 import { NewsDetail } from "./pages/Shared/NewsDetail";
+import { Contributions } from "./pages/User/Contributions";
 import { EventPoints } from "./pages/User/EventPoints";
 import { RecyclingPoints } from "./pages/User/RecyclingPoints";
 
@@ -33,7 +34,7 @@ export const Routes: React.FC = () => {
                 setAuthorizedRouteSet([
                     { component: RecyclingPoints, path: "/donusum-noktalari", exact: true },
                     { component: EventPoints, path: "/toplama-noktalari", exact: true },
-                    { component: () => <h1>Katkilarim</h1>, path: "/user/katkilarim", exact: true },
+                    { component: Contributions, path: "/user/katkilarim", exact: true },
                     { component: () => <h1>Kullanici bilgileri</h1>, path: "/user/me", exact: true },
                 ]);
                 break;
