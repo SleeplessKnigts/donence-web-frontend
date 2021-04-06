@@ -21,13 +21,20 @@ import {
     Spinner,
     Container,
     Select,
+    Tabs,
+    TabList,
+    Tab,
+    TabPanels,
+    TabPanel,
 } from '@chakra-ui/react';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import { useQuery } from 'react-query';
+import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
 import { CollectionEvent, UserRequest } from '../../shared/types';
+import { EventPoints } from '../User/EventPoints';
 
 export const EventList: React.FC = () => {
     const { data: eventList, isFetched } = useQuery(
@@ -46,6 +53,7 @@ export const EventList: React.FC = () => {
     };
 
     let component = <Spinner size='lg' />;
+    let map = null;
     if (isFetched) {
         console.log(eventList);
         component = (
@@ -59,10 +67,12 @@ export const EventList: React.FC = () => {
                     variant='simple'
                     colorScheme='teal'
                     size='sm'
-                    color='green.100'
+                    color='green.700'
                     fontWeight='bold'
                 >
-                    <TableCaption>Atık Toplama Etkinlikleri</TableCaption>
+                    <TableCaption color='green.700'>
+                        Atık Toplama Etkinlikleri
+                    </TableCaption>
                     <Thead>
                         <Tr>
                             <Th>Etkinlik</Th>
@@ -140,11 +150,22 @@ export const EventList: React.FC = () => {
                 )}
             </Grid>
         );
+        map = <EventPoints />;
     }
 
     return (
-        <Container centerContent maxW='container.lg'>
-            {component}
+        <Container maxW='container.lg'>
+            <Tabs m={2} variant='soft-rounded' colorScheme='green'>
+                <TabList>
+                    <Tab>Etkinlikler</Tab>
+                    <Tab>Haritada Görüntüle</Tab>
+                </TabList>
+
+                <TabPanels>
+                    <TabPanel>{component}</TabPanel>
+                    <TabPanel>{map}</TabPanel>
+                </TabPanels>
+            </Tabs>
         </Container>
     );
 };
