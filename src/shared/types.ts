@@ -1,8 +1,10 @@
+export type requestTypes = "Yağ" | "Elektronik" | "Kağıt" | "Plastik" | "Pil" | "Cam";
+
 export interface RecyclePoint {
     recyclePointDetail: string;
     lat: number;
     lng: number;
-    recyclyPointPlaceType: "Yağ" | "Elektronik" | "Kağıt" | "Plastik" | "Pil" | "Cam";
+    recyclyPointPlaceType: requestTypes;
 }
 export interface AssignRole {
     email: string;
@@ -24,7 +26,7 @@ export interface Issuer{
 }
 
 export interface UserRequest{
-    requestType: "Yağ" | "Elektronik" | "Kağıt" | "Plastik" | "Pil" | "Cam", 
+    requestType: requestTypes, 
     creationDate: Date,
     isActive:boolean,
     issuer: Issuer,
