@@ -1,5 +1,5 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { NewsResponse, RecyclePoint, requestTypes, UserInfo } from "../../types";
+import { NewsResponse, RecyclePoint, requestTypes, UserInfo, UserRequest } from "../../types";
 
 export type status = "all" | "active" | "completed";
 export class UserResource {
@@ -34,7 +34,7 @@ export class UserResource {
             .catch((err) => err);
     };
 
-    getAllRequestsByStatus = (status: status): Promise<any> => {
+    getAllRequestsByStatus = (status: status): Promise<UserRequest[]> => {
         console.log("I am being called", status);
         return this.axios
             .get(`user/requests/${status}`, this.axiosRequestConfig)
@@ -42,7 +42,7 @@ export class UserResource {
             .catch((err) => err);
     };
 
-    getAllRequestsByStatusAndType = (status: status, requestType: requestTypes): Promise<any> => {
+    getAllRequestsByStatusAndType = (status: status, requestType: requestTypes): Promise<UserRequest[]> => {
         return this.axios
             .get(`user/requests/${requestType}/${status}`, this.axiosRequestConfig)
             .then((response) => response.data)
