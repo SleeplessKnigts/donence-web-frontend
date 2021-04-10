@@ -12,6 +12,7 @@ import { useForm } from 'react-hook-form';
 import { api } from '../../shared/api/api';
 import { RecyclePoint } from '../../shared/types';
 import { useMutation } from 'react-query';
+import { useLocation } from 'react-router-dom';
 
 type AddRecyclePointProps = {
     currentPoint?: RecyclePoint;
@@ -20,39 +21,69 @@ type AddRecyclePointProps = {
 export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
     currentPoint,
 }) => {
-    const mutation = useMutation(api.admin.newRecyclePoint, {
+    const location = useLocation<{ currentPoint: RecyclePoint }>();
+    const [update, setUpdate] = useState<boolean>(false);
+    const updateMutation = useMutation(api.admin.updateRecyclePoint, {
+        onSuccess: () => {
+            alert('Geri Donusum Noktasi Basariyla Güncellendi');
+        },
+    });
+    const addMutation = useMutation(api.admin.newRecyclePoint, {
         onSuccess: () => alert('Geri Donusum Noktasi Basariyla Eklendi'),
     });
 
     const [currentLoc, setCurrentLoc] = useState<RecyclePoint>({
+        recyclePointId: 0,
         recyclePointDetail: 'Geri donusum noktasi',
         lat: 39.904239006864785,
         lng: 32.87195490942385,
-        recyclyPointPlaceType: 'Plastik',
+        recyclePointPlaceType: 'Plastik',
     });
 
     useEffect(() => {
-        if (currentPoint) {
+        if (location.state?.currentPoint) {
+            setUpdate(true);
+            setCurrentLoc(location.state.currentPoint);
+        } else if (currentPoint) {
             setCurrentLoc(currentPoint);
         }
     }, [currentPoint]);
+
+    let map = null;
+    if (location.state?.currentPoint) {
+        map = (
+            <Map
+                setCurrentLoc={setCurrentLoc}
+                addPoint={true}
+                currentLoc={location.state.currentPoint}
+            />
+        );
+    } else {
+        map = (
+            <Map
+                setCurrentLoc={setCurrentLoc}
+                addPoint={true}
+                currentLoc={currentLoc}
+            />
+        );
+    }
+
     const { handleSubmit, register, formState } = useForm();
     function onSubmit(values: any) {
         console.log(values);
         values.lat = currentLoc.lat;
         values.lng = currentLoc.lng;
-        mutation.mutate(values);
+        if (update) {
+            values.recyclePointId = currentLoc.recyclePointId;
+            updateMutation.mutate(values);
+        } else {
+            addMutation.mutate(values);
+        }
     }
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl>
-                <Map
-                    setCurrentLoc={setCurrentLoc}
-                    addPoint={true}
-                    currentLoc={currentLoc}
-                />
-            </FormControl>
+            <FormControl>{map}</FormControl>
             <HStack margin='4' spacing='8'>
                 <FormControl>
                     <Input
@@ -63,6 +94,11 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
                         borderColor='green.700'
                         isRequired={true}
                         ref={register({ required: true })}
+                        defaultValue={
+                            location.state?.currentPoint
+                                ? location.state.currentPoint.recyclePointDetail
+                                : currentLoc.recyclePointDetail
+                        }
                     />
                 </FormControl>
                 <FormControl>
@@ -70,6 +106,12 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
                         variant='filled'
                         name='recyclePointPlaceType'
                         ref={register({ required: true })}
+                        defaultValue={
+                            location.state?.currentPoint
+                                ? location.state.currentPoint
+                                      .recyclePointPlaceType
+                                : currentLoc.recyclePointPlaceType
+                        }
                     >
                         <option value='Plastik'>Plastik</option>
                         <option value='Elektronik'>Elektronik</option>
@@ -87,7 +129,7 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
                     isLoading={formState.isSubmitting}
                     type='submit'
                 >
-                    Ekle
+                    Onayla
                 </Button>
             </Center>
         </form>
