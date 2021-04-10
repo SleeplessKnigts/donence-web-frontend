@@ -25,6 +25,7 @@
     "framer-motion": "^3.2.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-geocode": "^0.2.3",
     "react-hook-form": "^6.15.1",
     "react-icons": "^4.1.0",
     "react-query": "^3.12.3",
@@ -57,5 +58,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/react-geocode": "^0.2.0"
   }
 }
