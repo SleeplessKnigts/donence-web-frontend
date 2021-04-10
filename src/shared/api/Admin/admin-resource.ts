@@ -9,6 +9,16 @@ export class AdminResource {
 
     getRecyclePoints = (): Promise<RecyclePoint[]> =>
         this.axios.get("admin/recycle-point/", this.axiosRequestConfig).then((r) => r.data);
+    
+    deleteRecyclePoints = (recyclePointId:number) => {
+        return this.axios
+        .delete("admin/recycle-point/delete/"+recyclePointId, this.axiosRequestConfig)
+        .then((r) => r.data)
+        .catch((e) => console.error(e));
+    }
+
+    updateRecyclePoint = (data: RecyclePoint) =>  
+        this.axios.put("admin/recycle-point/update", data, this.axiosRequestConfig).then((r) => r.data);
 
     assignNewRole = (data: AssignRole): Promise<any> => {
         return this.axios
@@ -28,6 +38,20 @@ export class AdminResource {
 
     newEventList = (data: CollectionEvent) =>
         this.axios.post("admin/admin/collection-event/new", data, this.axiosRequestConfig).then((r) => r.data);
+
+    deleteEvent = (collectionEventId:number) => {
+            return this.axios
+            .delete("admin/collection-event/delete/"+collectionEventId, this.axiosRequestConfig)
+            .then((r) => r.data)
+            .catch((e) => console.error(e));
+    }
+    
+    updateEvent = (data: CollectionEvent) => {
+            return this.axios
+            .put("admin/collection-event/update",data, this.axiosRequestConfig)
+            .then((r) => r.data)
+            .catch((e) => console.error(e));
+    }
 
     createNews = (data: News) => {
         return this.axios
