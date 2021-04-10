@@ -35,7 +35,6 @@ export const Map: React.FC<MapProps> = ({
 
     if (pointList) {
         setPoints(pointList);
-        console.log(pointList);
     }
 
     const onMarkerDragEnd = (values: any) => {

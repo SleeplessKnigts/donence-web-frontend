@@ -1,8 +1,14 @@
-import { Box } from "@chakra-ui/layout";
-import { GoogleMap, InfoWindow, LoadScript, Marker, MarkerClusterer } from "@react-google-maps/api";
-import React, { useState } from "react";
-import { TitleToColorMapping } from "../../constants/Mappings";
-import { RecyclePoint, UserRequest } from "../../shared/types";
+import { Box } from '@chakra-ui/layout';
+import {
+    GoogleMap,
+    InfoWindow,
+    LoadScript,
+    Marker,
+    MarkerClusterer,
+} from '@react-google-maps/api';
+import React, { useState } from 'react';
+import { TitleToColorMapping } from '../../constants/Mappings';
+import { RecyclePoint, UserRequest } from '../../shared/types';
 
 export interface MapPoinstProps {
     recyclePoints?: RecyclePoint[];
@@ -11,12 +17,13 @@ export interface MapPoinstProps {
 }
 
 const options = {
-    imagePath: "https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m",
+    imagePath:
+        'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m',
 };
 
 const containerStyle = {
-    width: "100%",
-    height: "600px",
+    width: '100%',
+    height: '600px',
 };
 
 function createKey(location: any) {
@@ -45,7 +52,7 @@ export const MapPoints: React.FC<MapPoinstProps> = ({
                 return (
                     <Marker
                         key={index}
-                        icon={TitleToColorMapping[el.recyclyPointPlaceType]}
+                        icon={TitleToColorMapping[el.recyclePointPlaceType]}
                         position={{ lat: el.lat, lng: el.lng }}
                         title={el.recyclePointDetail}
                         onClick={() => setPosition(el)}
@@ -57,22 +64,30 @@ export const MapPoints: React.FC<MapPoinstProps> = ({
         <MarkerClusterer options={options}>
             {(clusterer) =>
                 data.map((location: any) => (
-                    <Marker key={createKey(location)} position={location} clusterer={clusterer} />
+                    <Marker
+                        key={createKey(location)}
+                        position={location}
+                        clusterer={clusterer}
+                    />
                 ))
             }
         </MarkerClusterer>
     );
 
     return (
-        <LoadScript googleMapsApiKey="AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y">
-            <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={15}>
+        <LoadScript googleMapsApiKey='AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y'>
+            <GoogleMap
+                mapContainerStyle={containerStyle}
+                center={center}
+                zoom={15}
+            >
                 {markers}
                 {recyclePoints && position && (
                     <InfoWindow
                         position={{ lat: position.lat, lng: position.lng }}
                         onCloseClick={() => setPosition(null)}
                     >
-                        <Box p="4">{position.recyclePointDetail}</Box>
+                        <Box p='4'>{position.recyclePointDetail}</Box>
                     </InfoWindow>
                 )}
             </GoogleMap>
