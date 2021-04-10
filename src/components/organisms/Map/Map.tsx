@@ -28,14 +28,11 @@ export const Map: React.FC<MapProps> = ({
     const [show, setShow] = useState(false);
     const [selectedPoint, setSelectedPoint] = useState<RecyclePoint | null>();
     const [loc, setLoc] = useState({
-        lat: currentLoc?.lat,
-        lng: currentLoc?.lng,
+        lat: currentLoc ? currentLoc?.lat : 39.90206617850302,
+        lng: currentLoc ? currentLoc?.lng : 32.87345694647219,
     });
+    console.log(loc);
     const [points, setPoints] = useState<RecyclePoint[]>([]);
-
-    if (pointList) {
-        setPoints(pointList);
-    }
 
     const onMarkerDragEnd = (values: any) => {
         loc.lat = values?.lat();
@@ -45,7 +42,6 @@ export const Map: React.FC<MapProps> = ({
 
     return (
         <div className='map'>
-            <h2 className='map-h2'>İŞARETLEYİCİ İLE ADRESİ BELİRLEYİN</h2>
             <div className='google-map'>
                 <LoadScript googleMapsApiKey='AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y'>
                     <GoogleMap
@@ -53,52 +49,21 @@ export const Map: React.FC<MapProps> = ({
                         center={loc}
                         zoom={15}
                     >
-                        {addPoint ? (
-                            <>
-                                <Marker
-                                    key='point'
-                                    onClick={() => setShow(true)}
-                                    position={loc}
-                                    draggable={true}
-                                    onDragEnd={(e) => onMarkerDragEnd(e.latLng)}
-                                />
+                        <Marker
+                            key='point'
+                            onClick={() => setShow(true)}
+                            position={loc}
+                            draggable={true}
+                            onDragEnd={(e) => onMarkerDragEnd(e.latLng)}
+                        />
 
-                                {show && (
-                                    <InfoWindow
-                                        position={loc}
-                                        onCloseClick={() => setShow(false)}
-                                    >
-                                        <p>{currentLoc?.recyclePointDetail}</p>
-                                    </InfoWindow>
-                                )}
-                            </>
-                        ) : (
-                            points.map((point) => (
-                                <>
-                                    <Marker
-                                        key={point.recyclePointDetail}
-                                        onClick={() => setSelectedPoint(point)}
-                                        position={{
-                                            lat: point.lat,
-                                            lng: point.lng,
-                                        }}
-                                    />
-                                    {selectedPoint ? (
-                                        <InfoWindow
-                                            position={loc}
-                                            onCloseClick={() => {
-                                                setSelectedPoint(null);
-                                            }}
-                                        >
-                                            <p>
-                                                {
-                                                    selectedPoint.recyclePointDetail
-                                                }
-                                            </p>
-                                        </InfoWindow>
-                                    ) : null}
-                                </>
-                            ))
+                        {show && (
+                            <InfoWindow
+                                position={loc}
+                                onCloseClick={() => setShow(false)}
+                            >
+                                <p>{currentLoc?.recyclePointDetail}</p>
+                            </InfoWindow>
                         )}
                     </GoogleMap>
                 </LoadScript>
