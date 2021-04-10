@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/layout';
 import { useBreakpointValue } from '@chakra-ui/media-query';
 import { useState } from 'react';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import Header from '../../components/atoms/Header';
 import Sidebar from '../../components/molecules/Sidebar';
 import { AddNews } from '../AdminPanel/AddNews';
@@ -31,6 +31,7 @@ export const AdminHomePage = () => {
 
     return (
         <>
+            <Redirect exact from='/' to='/admin/kullanici-istekleri' />
             <Sidebar
                 variant={variants?.navigation}
                 isOpen={isSidebarOpen}
