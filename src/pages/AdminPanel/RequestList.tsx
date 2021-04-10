@@ -7,16 +7,7 @@ import {
     Th,
     Td,
     TableCaption,
-    Button,
-    Center,
     Grid,
-    Modal,
-    ModalOverlay,
-    ModalContent,
-    ModalHeader,
-    ModalCloseButton,
-    ModalBody,
-    ModalFooter,
     useDisclosure,
     Spinner,
     Container,
@@ -27,35 +18,33 @@ import {
     TabPanels,
     TabPanel,
 } from '@chakra-ui/react';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useState } from 'react';
 import { useQuery } from 'react-query';
 import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
-import { UserRequest } from '../../shared/types';
+import Geocode from 'react-geocode';
 
 export const RequestList: React.FC = () => {
     const { data: requestList, isFetched } = useQuery(
         'getRequestList',
         api.admin.getRequestList
     );
-    const [clickedRequest, setClickedRequest] = useState<UserRequest>();
-    const [showDeletePopup, setShowDeletePopup] = useState(false);
-    // useDisclosure is a custom hook used to help handle common open, close, or toggle scenarios.
-    const { isOpen, onOpen, onClose } = useDisclosure();
-
-    const handleDeleteClick = (request: UserRequest) => {
-        setClickedRequest(request);
-        setShowDeletePopup(true);
-        console.log(request);
-        onOpen();
-    };
-
+    Geocode.setApiKey('AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y');
+    Geocode.setLanguage('tr');
+    Geocode.setRegion('tr');
+    {
+        Geocode.fromLatLng('42', '35').then(
+            (response) => {
+                const address = response.results[0].formatted_address;
+                console.log(address);
+            },
+            (error) => {
+                console.error(error);
+            }
+        );
+    }
     let component = <Spinner size='lg' />;
     let map = null;
     if (isFetched) {
-        console.log(requestList);
         component = (
             <Grid m={4}>
                 <Select name='isActive' colorScheme='green.100'>
@@ -76,7 +65,7 @@ export const RequestList: React.FC = () => {
                             <Th>Materyal</Th>
                             <Th>Tarih</Th>
                             <Th>Kullanıcı</Th>
-                            <Th>Sil</Th>
+                            <Th>Adres</Th>
                         </Tr>
                     </Thead>
 
@@ -86,16 +75,7 @@ export const RequestList: React.FC = () => {
                                 <Td>{request.requestType}</Td>
                                 <Td>{request.creationDate}</Td>
                                 <Td>{request.issuer.fname}</Td>
-                                <Td>
-                                    <Button colorScheme='red'>
-                                        <FontAwesomeIcon
-                                            icon={faTrashAlt}
-                                            onClick={() =>
-                                                handleDeleteClick(request)
-                                            }
-                                        />
-                                    </Button>
-                                </Td>
+                                <Td></Td>
                             </Tr>
                         ))}
                     </Tbody>
@@ -105,31 +85,10 @@ export const RequestList: React.FC = () => {
                             <Th>Materyal</Th>
                             <Th>Tarih</Th>
                             <Th>Kullanıcı</Th>
-                            <Th>Sil</Th>
+                            <Th>Adres</Th>
                         </Tr>
                     </Tfoot>
                 </Table>
-                {showDeletePopup && (
-                    <Modal isOpen={isOpen} onClose={onClose}>
-                        <ModalOverlay />
-                        <ModalContent>
-                            <ModalHeader>
-                                İsteğin silinmesini onaylıyor musunuz?
-                            </ModalHeader>
-                            <ModalCloseButton />
-                            <ModalFooter>
-                                <Button
-                                    colorScheme='blue'
-                                    mr={3}
-                                    onClick={onClose}
-                                >
-                                    Kapat
-                                </Button>
-                                <Button colorScheme='red'>Sil</Button>
-                            </ModalFooter>
-                        </ModalContent>
-                    </Modal>
-                )}
             </Grid>
         );
         map = <MapPoints userRequestPoints={requestList} />;
