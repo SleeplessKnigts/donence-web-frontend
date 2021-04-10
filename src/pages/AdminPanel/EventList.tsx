@@ -1,3 +1,4 @@
+import { Heading } from '@chakra-ui/layout';
 import {
     Table,
     Thead,
@@ -79,6 +80,8 @@ export const EventList: React.FC = () => {
                             <Th>Materyal</Th>
                             <Th>Latitude</Th>
                             <Th>Longitude</Th>
+                            <Th>Güncelle</Th>
+                            <Th>Sil</Th>
                         </Tr>
                     </Thead>
 
@@ -122,6 +125,8 @@ export const EventList: React.FC = () => {
                             <Th>Materyal</Th>
                             <Th>Latitude</Th>
                             <Th>Longitude</Th>
+                            <Th>Güncelle</Th>
+                            <Th>Sil</Th>
                         </Tr>
                     </Tfoot>
                 </Table>
@@ -155,6 +160,7 @@ export const EventList: React.FC = () => {
 
     return (
         <Container maxW='container.lg'>
+            <Heading>Atık Toplama Etkinliklerini Listele</Heading>
             <Tabs m={2} variant='soft-rounded' colorScheme='green'>
                 <TabList>
                     <Tab>Etkinlikler</Tab>

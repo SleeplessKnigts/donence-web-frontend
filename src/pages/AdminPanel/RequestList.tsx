@@ -22,6 +22,7 @@ import { useQuery } from 'react-query';
 import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
 import Geocode from 'react-geocode';
+import { Heading } from '@chakra-ui/layout';
 
 export const RequestList: React.FC = () => {
     const { data: requestList, isFetched } = useQuery(
@@ -96,6 +97,7 @@ export const RequestList: React.FC = () => {
 
     return (
         <Container maxW='container.lg'>
+            <Heading>İstekleri Listele</Heading>
             <Tabs m={2} variant='soft-rounded' colorScheme='green'>
                 <TabList>
                     <Tab>İstek Listesi</Tab>

@@ -35,6 +35,7 @@ import { MapPoints } from '../../components/molecules/MapPoints';
 import { useQuery } from 'react-query';
 
 import { useHistory } from 'react-router';
+import { Heading } from '@chakra-ui/layout';
 export const RecyclePointList = () => {
     let history = useHistory();
     const { data: recyclePointList, isFetched, refetch } = useQuery(
@@ -169,6 +170,7 @@ export const RecyclePointList = () => {
     }
     return (
         <Container maxW='container.lg'>
+            <Heading>Geri Dönüşüm Noktalarını Listele</Heading>
             <Tabs m={2} variant='soft-rounded' colorScheme='green'>
                 <TabList>
                     <Tab>Geri Dönüşüm Noktaları</Tab>

@@ -13,6 +13,7 @@ import { api } from '../../shared/api/api';
 import { RecyclePoint } from '../../shared/types';
 import { useMutation } from 'react-query';
 import { useLocation } from 'react-router-dom';
+import { Heading } from '@chakra-ui/layout';
 
 type AddRecyclePointProps = {
     currentPoint?: RecyclePoint;
@@ -83,7 +84,11 @@ export const AddRecyclePoint: React.FC<AddRecyclePointProps> = ({
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
-            <FormControl>{map}</FormControl>
+            <Heading>Geri Dönüşüm Noktası Ekle/Güncelle</Heading>
+            <FormControl>
+                <h2 className='map-h2'>İŞARETLEYİCİ İLE ADRESİ BELİRLEYİN</h2>
+                {map}
+            </FormControl>
             <HStack margin='4' spacing='8'>
                 <FormControl>
                     <Input
