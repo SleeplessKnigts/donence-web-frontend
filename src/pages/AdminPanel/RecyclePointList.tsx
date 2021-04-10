@@ -15,7 +15,6 @@ import {
     ModalContent,
     ModalHeader,
     ModalCloseButton,
-    ModalBody,
     ModalFooter,
     useDisclosure,
     Container,
@@ -28,24 +27,22 @@ import {
 } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { api } from '../../shared/api/api';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { RecyclePoint } from '../../shared/types';
 import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
-import AddRecyclePoint from './AddRecyclePoint';
-import { GoogleMap } from '@react-google-maps/api';
+
 import { MapPoints } from '../../components/molecules/MapPoints';
 import { useQuery } from 'react-query';
 
 import { useHistory } from 'react-router';
 export const RecyclePointList = () => {
     let history = useHistory();
-    const { data: recyclePointList, isFetched } = useQuery(
+    const { data: recyclePointList, isFetched, refetch } = useQuery(
         'getRecPointList',
         api.admin.getRecyclePoints
     );
-    const [points, setPoints] = useState<RecyclePoint[]>([]);
     const [clickedPoint, setClickedPoint] = useState<RecyclePoint>();
-    const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
     // useDisclosure is a custom hook used to help handle common open, close, or toggle scenarios.
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -54,6 +51,23 @@ export const RecyclePointList = () => {
             pathname: '/admin/geri-donusum-noktasi-ekle',
             state: { currentPoint: point },
         });
+    };
+
+    const handleDeleteClick = (point: RecyclePoint) => {
+        setClickedPoint(point);
+        setShowDeletePopup(true);
+        console.log(point);
+        onOpen();
+    };
+
+    const deletePoint = () => {
+        if (clickedPoint)
+            api.admin
+                .deleteRecyclePoints(clickedPoint.recyclePointId)
+                .then(() => {
+                    onClose();
+                    refetch();
+                });
     };
 
     let component = <Spinner size='lg' />;
@@ -71,6 +85,7 @@ export const RecyclePointList = () => {
                     <TableCaption>Geri Dönüşüm Noktaları</TableCaption>
                     <Thead>
                         <Tr>
+                            <Th>ID</Th>
                             <Th>Geri Dönüşüm Noktasi isimleri</Th>
                             <Th>Materyal</Th>
                             <Th isNumeric>Latitude</Th>
@@ -82,8 +97,9 @@ export const RecyclePointList = () => {
                     <Tbody>
                         {recyclePointList?.map((point) => (
                             <Tr>
+                                <Td>{point.recyclePointId}</Td>
                                 <Td>{point.recyclePointDetail}</Td>
-                                <Td>{point.recyclyPointPlaceType}</Td>
+                                <Td>{point.recyclePointPlaceType}</Td>
                                 <Td isNumeric>{point.lat}</Td>
                                 <Td isNumeric>{point.lng}</Td>
                                 <Td>
@@ -99,19 +115,21 @@ export const RecyclePointList = () => {
                                     </Center>
                                 </Td>
                                 <Td>
-                                    <Center>
-                                        <Button colorScheme='red'>
-                                            <FontAwesomeIcon
-                                                icon={faTrashAlt}
-                                            />
-                                        </Button>
-                                    </Center>
+                                    <Button colorScheme='red'>
+                                        <FontAwesomeIcon
+                                            icon={faTrashAlt}
+                                            onClick={() =>
+                                                handleDeleteClick(point)
+                                            }
+                                        />
+                                    </Button>
                                 </Td>
                             </Tr>
                         ))}
                     </Tbody>
                     <Tfoot>
                         <Tr>
+                            <Th>ID</Th>
                             <Th>Geri Dönüşüm Noktasi İsimleri</Th>
                             <Th>Materyal</Th>
                             <Th isNumeric>Latitude</Th>
@@ -121,6 +139,30 @@ export const RecyclePointList = () => {
                         </Tr>
                     </Tfoot>
                 </Table>
+                {showDeletePopup && (
+                    <Modal isOpen={isOpen} onClose={onClose}>
+                        <ModalOverlay />
+                        <ModalContent>
+                            <ModalHeader>
+                                Geri dönüşüm noktasının silinmesini onaylıyor
+                                musunuz?
+                            </ModalHeader>
+                            <ModalCloseButton />
+                            <ModalFooter>
+                                <Button
+                                    colorScheme='blue'
+                                    mr={3}
+                                    onClick={onClose}
+                                >
+                                    Kapat
+                                </Button>
+                                <Button colorScheme='red' onClick={deletePoint}>
+                                    Sil
+                                </Button>
+                            </ModalFooter>
+                        </ModalContent>
+                    </Modal>
+                )}
             </Grid>
         );
         map = <MapPoints recyclePoints={recyclePointList} />;
