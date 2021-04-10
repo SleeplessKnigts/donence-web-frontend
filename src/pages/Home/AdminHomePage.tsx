@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 import Header from '../../components/atoms/Header';
 import Sidebar from '../../components/molecules/Sidebar';
+import { AddEvent } from '../AdminPanel/AddEvent';
 import { AddNews } from '../AdminPanel/AddNews';
 import AddRecyclePoint from '../AdminPanel/AddRecyclePoint';
 import { EventList } from '../AdminPanel/EventList';
@@ -64,7 +65,7 @@ export const AdminHomePage = () => {
                         />
                         <Route
                             path='/admin/etkinlik-ekle'
-                            component={RecyclePointList}
+                            component={AddEvent}
                         />
                         <Route
                             path='/admin/kullanici-yetkileri'
