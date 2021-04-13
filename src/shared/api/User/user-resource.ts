@@ -1,5 +1,5 @@
 import axiosStatic, { AxiosInstance, AxiosRequestConfig } from "axios";
-import { NewsResponse, RecyclePoint, requestTypes, UserInfo, UserRequest } from "../../types";
+import { CollectionEvent, NewsResponse, RecyclePoint, requestTypes, UserInfo, UserRequest } from "../../types";
 
 export type status = "all" | "active" | "completed";
 export class UserResource {
@@ -48,4 +48,7 @@ export class UserResource {
             .then((response) => response.data)
             .catch((err) => err);
     };
+
+    getEventList = (): Promise<CollectionEvent[]> =>
+        this.axios.get("user/collection-event", this.axiosRequestConfig).then((r) => r.data);
 }
