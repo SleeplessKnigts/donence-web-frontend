@@ -1,5 +1,5 @@
 import { Box, Container, Heading } from "@chakra-ui/layout";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { Feature } from "../../components/molecules/Feature";
@@ -9,8 +9,6 @@ import { api } from "../../shared/api/api";
 export const UserHomePage = () => {
 
     const { data } = useQuery("getProfileInfo", api.user.getProfileInfo);
-
-    console.log(data)
 
     return (
         <Container maxW="container.lg" paddingY="16" height="100vh">
@@ -44,9 +42,9 @@ export const UserHomePage = () => {
                             }
                         />
                     </Link>
-                    <Link to="/user/me">
+                    {/* <Link to="/user/me">
                         <Feature title="Kullanıcı Bilgileri" description="" imageSource={data?.imageUrl} />
-                    </Link>
+                    </Link> */}
                 </Features>
             </Box>
         </Container>
