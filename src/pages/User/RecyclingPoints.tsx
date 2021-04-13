@@ -7,10 +7,11 @@ import { ObjectFlags } from "typescript";
 import { MapPoints } from "../../components/molecules/MapPoints";
 import { TitleToColorMapping } from "../../constants/Mappings";
 import { api } from "../../shared/api/api";
+import { RecyclePoint, UserInfo } from "../../shared/types";
 
 export const RecyclingPoints: React.FC = () => {
-    const { data: userInfo, isFetched } = useQuery("getProfileInfo", api.user.getProfileInfo);
-    const { data: recylingPoints } = useQuery("recyclingPoints", api.user.getRecyclingPoints);
+    const { data: userInfo, isFetched } = useQuery<UserInfo>("getProfileInfo", api.user.getProfileInfo);
+    const { data: recylingPoints } = useQuery<RecyclePoint[]>("recyclingPoints", api.user.getRecyclingPoints);
 
     let component = <Spinner size="lg" />;
 

@@ -39,7 +39,7 @@ export const Contributions: React.FC = () => {
     let rawChartData: { [x: string]: any[] } = {};
     let chartData;
     if (userData) {
-        rawChartData = groupBy(userData, "creationDate");
+        rawChartData = groupBy(userData as Array<any>, "creationDate");
         chartData = Object.keys(rawChartData).map((key) => {
             return {
                 month: key,
