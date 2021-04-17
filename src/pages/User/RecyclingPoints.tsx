@@ -34,7 +34,7 @@ export const RecyclingPoints: React.FC = () => {
                         })}
                     </List>
                 </Text>
-                <MapPoints center={{ lat: userInfo?.lat, lng: userInfo?.lng }} recyclePoints={recylingPoints} />
+                <MapPoints center={ userInfo?.lat ? {lat: userInfo?.lat, lng: userInfo?.lng} : undefined} recyclePoints={recylingPoints} />
             </Container>
         );
     }

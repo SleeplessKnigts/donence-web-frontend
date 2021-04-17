@@ -34,7 +34,7 @@ export const EventPoints: React.FC = () => {
                         })}
                     </List>
                 </Text>
-                <MapPoints center={{ lat: userInfo?.lat, lng: userInfo?.lng }} eventPoints={eventPoints} />
+                <MapPoints center={ userInfo?.lat ? {lat: userInfo?.lat, lng: userInfo?.lng} : undefined} eventPoints={eventPoints} />
             </Container>
         );
     }
