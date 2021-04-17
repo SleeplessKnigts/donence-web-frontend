@@ -36,8 +36,10 @@ import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
 import { CollectionEvent, UserRequest } from '../../shared/types';
 import { EventPoints } from '../User/EventPoints';
+import { useHistory } from 'react-router';
 
 export const EventList: React.FC = () => {
+    let history = useHistory();
     const { data: eventList, isFetched } = useQuery(
         'getEventList',
         api.admin.getEventList
@@ -48,9 +50,10 @@ export const EventList: React.FC = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleUpdateClick = (collectionEvent: CollectionEvent) => {
-        setClickedEvent(collectionEvent);
-        setShowUpdatePopup(true);
-        onOpen();
+        //previous state
+        history.push({
+            pathname: '/admin/etkinlik-ekle'
+        });
     };
 
     let component = <Spinner size='lg' />;
@@ -77,6 +80,7 @@ export const EventList: React.FC = () => {
                     <Thead>
                         <Tr>
                             <Th>Etkinlik</Th>
+                            <Th>Tarih</Th>
                             <Th>Materyal</Th>
                             <Th>Latitude</Th>
                             <Th>Longitude</Th>
@@ -89,6 +93,7 @@ export const EventList: React.FC = () => {
                         {eventList?.map((collectionEvent) => (
                             <Tr>
                                 <Td>{collectionEvent.eventDetail}</Td>
+                                <Td>{collectionEvent.collectionEventDate}</Td>
                                 <Td>{collectionEvent.materialType}</Td>
                                 <Td isNumeric>{collectionEvent.lat}</Td>
                                 <Td isNumeric>{collectionEvent.lng}</Td>
@@ -122,6 +127,7 @@ export const EventList: React.FC = () => {
                     <Tfoot>
                         <Tr>
                             <Th>Etkinlik</Th>
+                            <Th>Tarih</Th>
                             <Th>Materyal</Th>
                             <Th>Latitude</Th>
                             <Th>Longitude</Th>
@@ -155,7 +161,7 @@ export const EventList: React.FC = () => {
                 )}
             </Grid>
         );
-        map = <EventPoints />;
+        map = <MapPoints eventPoints={eventList} />;
     }
 
     return (

@@ -36,6 +36,7 @@ export interface UserRequest{
 
 export interface CollectionEvent{
     eventDetail:string,
+    collectionEventDate:Date,
     materialType:string,
     lat:number,
     lng:number,

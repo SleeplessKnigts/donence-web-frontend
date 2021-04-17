@@ -37,7 +37,7 @@ export class AdminResource {
         this.axios.get("admin/collection-event", this.axiosRequestConfig).then((r) => r.data);
 
     newEventList = (data: CollectionEvent) =>
-        this.axios.post("admin/admin/collection-event/new", data, this.axiosRequestConfig).then((r) => r.data);
+        this.axios.post("admin/collection-event/new", data, this.axiosRequestConfig).then((r) => r.data);
 
     deleteEvent = (collectionEventId:number) => {
             return this.axios
