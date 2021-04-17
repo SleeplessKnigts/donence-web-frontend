@@ -41,7 +41,7 @@ export const AddEvent = () => {
 
     return (
         <Container maxW='container.lg'>
-            <Heading>Atık Toplama Etkinliği Oluştur</Heading>
+            <Heading>Atık Toplama Etkinliği</Heading>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <FormControl m={4}>
                     <FormLabel>Etkinlik Tarihi</FormLabel>

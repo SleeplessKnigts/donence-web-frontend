@@ -57,7 +57,6 @@ export const RecyclePointList = () => {
     const handleDeleteClick = (point: RecyclePoint) => {
         setClickedPoint(point);
         setShowDeletePopup(true);
-        console.log(point);
         onOpen();
     };
 

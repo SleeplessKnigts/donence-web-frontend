@@ -35,17 +35,17 @@ import { useQuery } from 'react-query';
 import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
 import { CollectionEvent, UserRequest } from '../../shared/types';
-import { EventPoints } from '../User/EventPoints';
 import { useHistory } from 'react-router';
 
 export const EventList: React.FC = () => {
     let history = useHistory();
-    const { data: eventList, isFetched } = useQuery(
+    const { data: eventList, isFetched, refetch } = useQuery(
         'getEventList',
         api.admin.getEventList
     );
     const [clickedEvent, setClickedEvent] = useState<CollectionEvent>();
     const [showUpdatePopup, setShowUpdatePopup] = useState(false);
+    const [showDeletePopup, setShowDeletePopup] = useState(false);
     // useDisclosure is a custom hook used to help handle common open, close, or toggle scenarios.
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -54,6 +54,22 @@ export const EventList: React.FC = () => {
         history.push({
             pathname: '/admin/etkinlik-ekle'
         });
+    };
+
+    const handleDeleteClick = (event: CollectionEvent) => {
+        setClickedEvent(event);
+        setShowDeletePopup(true);
+        onOpen();
+    };
+
+    const deleteEvent = () => {
+        if (clickedEvent)
+            api.admin
+                .deleteEvent(clickedEvent.collectionEventId)
+                .then(() => {
+                    onClose();
+                    refetch();
+                });
     };
 
     let component = <Spinner size='lg' />;
@@ -113,7 +129,10 @@ export const EventList: React.FC = () => {
                                 </Td>
                                 <Td>
                                     <Center>
-                                        <Button colorScheme='red'>
+                                        <Button colorScheme='red'
+                                            onClick={() =>
+                                                handleDeleteClick(collectionEvent)
+                                            }>
                                             <FontAwesomeIcon
                                                 icon={faTrashAlt}
                                             />
@@ -136,24 +155,24 @@ export const EventList: React.FC = () => {
                         </Tr>
                     </Tfoot>
                 </Table>
-                {showUpdatePopup && (
-                    <Modal isOpen={isOpen} onClose={onClose} size='full'>
+                {showDeletePopup && (
+                    <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
-                            <ModalHeader>Etkinlik Güncelleme</ModalHeader>
+                            <ModalHeader>
+                                Toplama etkinliğini silmek istiyor musunuz?
+                            </ModalHeader>
                             <ModalCloseButton />
-                            <ModalBody>Temp</ModalBody>
-
                             <ModalFooter>
                                 <Button
                                     colorScheme='blue'
                                     mr={3}
                                     onClick={onClose}
                                 >
-                                    Close
+                                    Kapat
                                 </Button>
-                                <Button variant='ghost'>
-                                    Secondary Action
+                                <Button colorScheme='red' onClick={deleteEvent}>
+                                    Sil
                                 </Button>
                             </ModalFooter>
                         </ModalContent>
