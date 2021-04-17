@@ -6,6 +6,8 @@ import {
     FormControl,
     FormLabel,
     Heading,
+    Input,
+    Select,
     Stack,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
@@ -14,13 +16,29 @@ import 'react-datepicker/dist/react-datepicker.css';
 import tr from 'date-fns/locale/tr';
 import Map from '../../components/organisms/Map/Map';
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
+import { useMutation } from 'react-query';
+import { api } from '../../shared/api/api';
 
 export const AddEvent = () => {
     const { handleSubmit, register, formState } = useForm();
-    function onSubmit(values: any) {}
-    const [startDate, setStartDate] = useState<Date | null>(new Date());
-    const [eventLoc, setEventLoc] = useState();
+    const [startDate, setStartDate] = useState<Date | [Date, Date] | null>(new Date());
+    const [eventLoc, setEventLoc] = useState({
+        lat: 39.904239006864785,
+        lng: 32.87195490942385,
+    });
     registerLocale('tr', tr);
+    const mutation = useMutation(api.admin.newEventList, {
+        onSuccess: () => alert('Atık Toplama Etkinliği Basariyla Oluşturuldu'),
+    });
+
+    function onSubmit(values: any) {
+        values.collectionEventDate=startDate
+        values.lat = eventLoc.lat;
+        values.lng = eventLoc.lng;
+        console.log(values);
+        mutation.mutate(values);
+    }
+
     return (
         <Container maxW='container.lg'>
             <Heading>Atık Toplama Etkinliği Oluştur</Heading>
@@ -29,37 +47,40 @@ export const AddEvent = () => {
                     <FormLabel>Etkinlik Tarihi</FormLabel>
                     <ReactDatePicker
                         locale='tr'
-                        selected={startDate}
                         //@TODO set date
-                        onChange={(date) => setStartDate(null)}
+                        selected={startDate as Date}
+                        onChange={(date) => setStartDate(date)}
                     />
                 </FormControl>
-                <FormControl m={4}>
-                    <FormLabel>Materyaller</FormLabel>
-                    <Stack spacing={10} direction='row'>
-                        <Checkbox colorScheme='red' defaultIsChecked>
-                            Plastik
-                        </Checkbox>
-                        <Checkbox colorScheme='green' defaultIsChecked>
-                            Elektronik
-                        </Checkbox>
-                        <Checkbox colorScheme='pink' defaultIsChecked>
-                            Kağıt
-                        </Checkbox>
-                        <Checkbox colorScheme='orange' defaultIsChecked>
-                            Pil
-                        </Checkbox>
-                        <Checkbox colorScheme='blue' defaultIsChecked>
-                            Cam
-                        </Checkbox>
-                        <Checkbox colorScheme='yellow' defaultIsChecked>
-                            Yağ
-                        </Checkbox>
-                    </Stack>
+                <FormControl>
+                    <Select
+                        variant='filled'
+                        name='materialType'
+                        ref={register({ required: true })}
+                        defaultValue='Plastik'
+                    >
+                        <option value='Plastik'>Plastik</option>
+                        <option value='Elektronik'>Elektronik</option>
+                        <option value='Kağıt'>Kağıt</option>
+                        <option value='Pil'>Pil</option>
+                        <option value='Cam'>Cam</option>
+                        <option value='Yağ'>Yağ</option>
+                    </Select>
                 </FormControl>
                 <FormControl m={4}>
                     <FormLabel>Etkinlik Yeri</FormLabel>
                     <Map addPoint={false} setCurrentLoc={setEventLoc}></Map>
+                </FormControl>
+                <FormControl>
+                    <Input
+                        m={2}
+                        name='eventDetail'
+                        placeholder='Detay Giriniz'
+                        focusBorderColor='lime'
+                        borderColor='green.700'
+                        isRequired={true}
+                        ref={register({ required: true })}
+                    />
                 </FormControl>
                 <Center>
                     <Button

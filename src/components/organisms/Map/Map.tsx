@@ -31,7 +31,6 @@ export const Map: React.FC<MapProps> = ({
         lat: currentLoc ? currentLoc?.lat : 39.90206617850302,
         lng: currentLoc ? currentLoc?.lng : 32.87345694647219,
     });
-    console.log(loc);
     const [points, setPoints] = useState<RecyclePoint[]>([]);
 
     const onMarkerDragEnd = (values: any) => {
