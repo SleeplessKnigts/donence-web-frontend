@@ -23,11 +23,13 @@ import { MapPoints } from '../../components/molecules/MapPoints';
 import { api } from '../../shared/api/api';
 import Geocode from 'react-geocode';
 import { Heading } from '@chakra-ui/layout';
+import { useState } from 'react';
 
 export const RequestList: React.FC = () => {
-    const { data: requestList, isFetched } = useQuery(
-        'getRequestList',
-        api.admin.getRequestList
+    const [active, setActive] = useState<boolean|''>('');
+    const { data: requestList, isFetched, refetch } = useQuery(
+        ['getRequestList',active],
+        () => api.admin.getRequestList(active)
     );
     Geocode.setApiKey('AIzaSyAaMe1ol3asoFB2sHw0g1LlMq6CalKi9-Y');
     Geocode.setLanguage('tr');
@@ -43,12 +45,26 @@ export const RequestList: React.FC = () => {
             }
         );
     }
+
+    const handleActive = (event: any) => {
+        const select = event?.target.value;
+        if(select==='Aktif'){
+            setActive(true);
+            refetch();
+        } else if(select==='Tamamlanmış'){
+            setActive(false);
+            refetch();
+        } else{
+            setActive('');
+            refetch();
+        }
+    }
     let component = <Spinner size='lg' />;
     let map = null;
     if (isFetched) {
         component = (
             <Grid m={4}>
-                <Select name='isActive' colorScheme='green.100'>
+                <Select name='isActive' colorScheme='green.100' onChange={handleActive}>
                     <option value='Hepsi'>Hepsi</option>
                     <option value='Aktif'>Aktif</option>
                     <option value='Tamamlanmış'>Tamamlanmış</option>

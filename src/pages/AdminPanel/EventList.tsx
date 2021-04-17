@@ -78,11 +78,6 @@ export const EventList: React.FC = () => {
         console.log(eventList);
         component = (
             <Grid m={4}>
-                <Select name='isActive' colorScheme='green.100'>
-                    <option value='Hepsi'>Hepsi</option>
-                    <option value='Aktif'>Aktif</option>
-                    <option value='Tamamlanmış'>Tamamlanmış</option>
-                </Select>
                 <Table
                     variant='simple'
                     colorScheme='teal'

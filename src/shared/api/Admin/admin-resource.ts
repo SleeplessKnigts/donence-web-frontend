@@ -27,8 +27,8 @@ export class AdminResource {
             .catch((e) => console.error(e));
     };
 
-    getRequestList = (): Promise<UserRequest[]> =>
-        this.axios.get("admin/requests", this.axiosRequestConfig).then((r) => r.data);
+    getRequestList = (active?: boolean | ''): Promise<UserRequest[]> =>
+        this.axios.get("admin/requests/"+active, this.axiosRequestConfig).then((r) => r.data);
 
     getUserRequestList = (data?: string, isActive?: boolean): Promise<Request[]> =>
         this.axios.get("admin/requests/" + data + "/" + isActive, this.axiosRequestConfig).then((r) => r.data);
