@@ -19,7 +19,6 @@ export const Menu: React.FC<MenuToggleProps> = (props) => {
         case '8a6ee639-a7e6-456f-af12-2b714df5fecd':
             authenticatedMenuElements = (
                 <>
-                    <MenuItem to={'/panel'}>Only user can see this</MenuItem>
                 </>
             );
             break;

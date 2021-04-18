@@ -80,6 +80,7 @@ export const Contributions: React.FC = () => {
                                 </>
                             );
                         })}
+                        {userData?.length === 0 && <Text fontWeight="bold">Aktif isteğiniz bulunmamaktadır!</Text>}
                     </TabPanel>
                     <TabPanel>
                         <BarChart width={800} height={400} data={chartData}>

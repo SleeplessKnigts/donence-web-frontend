@@ -1,7 +1,7 @@
 import axiosStatic, {AxiosRequestConfig} from 'axios';
 import {tokenInterceptor} from '../config/interceptor/token-interceptor';
 
-const baseUrl = 'http://localhost:8080';
+const baseUrl = 'https://donence.herokuapp.com';
 
 const defaultConfig: AxiosRequestConfig = {
     baseURL: `${baseUrl}/api/`,
