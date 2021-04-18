@@ -59,4 +59,16 @@ export class AdminResource {
             .then((response) => response.data)
             .catch((err) => err);
     };
+
+
+    makeRequestCompleted = (requestId: string) => {
+        return this.axios
+        .post("/requests/"+requestId+"/complete", this.axiosRequestConfig)
+        .then((r) => r.data)
+        .catch((e) => console.error(e));
+    }   
+
+    
+
+
 }

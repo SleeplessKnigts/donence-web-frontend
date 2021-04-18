@@ -28,6 +28,7 @@ export interface Issuer{
 }
 
 export interface UserRequest{
+    requestId:string,
     requestType: requestTypes, 
     creationDate: Date,
     isActive:boolean,
