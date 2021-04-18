@@ -98,7 +98,6 @@ export const RequestList: React.FC = () => {
                             <Th>Materyal</Th>
                             <Th>Tarih</Th>
                             <Th>Kullanıcı</Th>
-                            <Th>Adres</Th>
                             <Th>Tamamlandı</Th>                           
                         </Tr>
                     </Thead>
@@ -128,7 +127,6 @@ export const RequestList: React.FC = () => {
                             <Th>Materyal</Th>
                             <Th>Tarih</Th>
                             <Th>Kullanıcı</Th>
-                            <Th>Adres</Th>
                             <Th>Tamamlandı</Th> 
                         </Tr>
                     </Tfoot>
